@@ -1,7 +1,23 @@
-import { MapPin, Clock, Mail, Phone, Instagram, Facebook, MessageCircle } from 'lucide-react';
-import { siteConfig, whatsappOptions } from '@/data/site';
+import { MapPin, Clock, Mail, Instagram, Facebook, MessageCircle, Navigation, MapPinned } from 'lucide-react';
+import { siteConfig, whatsappOptions, googleMaps } from '@/data/site';
 
 export function Contact() {
+  // Construir la URL de embed del mapa
+  const mapEmbedSrc = (() => {
+    if (googleMaps.embedUrl) return googleMaps.embedUrl;
+    if (googleMaps.apiKey && googleMaps.placeId) {
+      return `https://www.google.com/maps/embed/v1/place?key=${googleMaps.apiKey}&q=place_id:${googleMaps.placeId}`;
+    }
+    if (googleMaps.apiKey) {
+      // Sin Place ID, usar búsqueda por nombre + dirección
+      const query = encodeURIComponent(`${siteConfig.name}, ${siteConfig.address}, ${siteConfig.city}`);
+      return `https://www.google.com/maps/embed/v1/search?key=${googleMaps.apiKey}&q=${query}`;
+    }
+    return ''; // Sin API key ni embed URL, mostrar marcador
+  })();
+
+  const hasMap = Boolean(mapEmbedSrc);
+
   return (
     <section id="contacto" className="py-24 sm:py-32 bg-crema-100">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
@@ -57,17 +73,50 @@ export function Contact() {
           </div>
 
           {/* Mapa */}
-          <div className="rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-auto min-h-[420px] bg-crema-200">
-            <iframe
-              title="Ubicación de Ricuras del Maíz en Piedecuesta"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-73.0%2C6.98%2C-72.96%2C7.02&layer=mapnik&marker=7.0%2C-72.98"
-              className="w-full h-full border-0 grayscale-[0.2]"
-              loading="lazy"
-            />
+          <div className="flex flex-col gap-4">
+            <div className="rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-auto min-h-[380px] bg-crema-200 relative">
+              {hasMap ? (
+                <iframe
+                  title="Ubicación de Ricuras del Maíz"
+                  src={mapEmbedSrc}
+                  className="w-full h-full border-0 grayscale-[0.15]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              ) : (
+                <MapPlaceholder />
+              )}
+            </div>
+
+            {/* Botón Cómo llegar */}
+            <a
+              href={googleMaps.directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-cafe-500 hover:bg-cafe-700 text-crema-100 font-semibold transition-colors shadow-md self-start"
+            >
+              <Navigation size={18} />
+              Cómo llegar
+            </a>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function MapPlaceholder() {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center text-center px-6 gap-3 bg-crema-200">
+      <span className="w-16 h-16 rounded-full bg-crema-300 flex items-center justify-center text-cafe-300">
+        <MapPinned size={32} />
+      </span>
+      <p className="font-serif text-lg text-cafe-500">Mapa en configuración</p>
+      <p className="text-cafe-300/70 text-sm max-w-xs">
+        El mapa interactivo de Google se activará cuando se configure la API key y el Place ID del negocio.
+      </p>
+    </div>
   );
 }
 

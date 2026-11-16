@@ -9,6 +9,7 @@ import { Testimonials } from '@/components/Testimonials';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { CartDrawer } from '@/components/CartDrawer';
+import { CustomOrder } from '@/components/CustomOrder';
 
 export default function App() {
   const cart = useCart();
@@ -32,6 +33,7 @@ export default function App() {
         <Hero onExplore={handleExplore} />
         <About />
         <Products onAdd={handleAdd} />
+        <CustomOrder />
         <Testimonials />
         <Contact />
       </main>

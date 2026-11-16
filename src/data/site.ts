@@ -288,6 +288,55 @@ export const images = {
 };
 
 // ============================================================
+// GOOGLE MAPS — Configuración centralizada
+// ============================================================
+//
+// Para activar el mapa interactivo necesitas:
+// 1. Obtener una API key de Google Cloud Console:
+//    - Habilita la "Maps Embed API" (no Places API ni Directions API).
+//    - Crea una clave de API (API key).
+//    - Restringe la clave: HTTP referrer (dominio de producción) + API = Maps Embed API.
+// 2. Copia la clave en el archivo .env del proyecto:
+//    VITE_GOOGLE_MAPS_EMBED_API_KEY=tu_clave_aqui
+// 3. Obtén el Place ID de tu ficha de Google Maps:
+//    - Abre tu ficha de Google Maps Business.
+//    - El Place ID se puede obtener desde la URL compartida o usando
+//      https://developers.google.com/maps/documentation/places/web-service/place-id
+//    - Pega el Place ID en googleMaps.placeId abajo.
+// 4. Como alternativa puedes usar directamente la URL de embed (googleMaps.embedUrl).
+//
+// Hasta que no se configure la API key y el Place ID, la sección mostrará
+// un marcador de posición con el botón "Cómo llegar".
+
+export const googleMaps = {
+  // Place ID de la ficha comercial de Ricuras del Maíz en Google Maps.
+  // Sustituir por el real cuando esté disponible.
+  placeId: '',
+  // URL de embed directa (opcional). Si se usa, reemplaza al Place ID.
+  embedUrl: '',
+  // Clave API leída desde .env (VITE_GOOGLE_MAPS_EMBED_API_KEY)
+  apiKey: import.meta.env.VITE_GOOGLE_MAPS_EMBED_API_KEY ?? '',
+  // URL de Google Maps para el botón "Cómo llegar".
+  // Usa la dirección codificada. Sustituir por el enlace exacto de la ficha si se conoce.
+  directionsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    'Ricuras del Maíz, ' + siteConfig.address + ', ' + siteConfig.city
+  )}`,
+};
+
+// ============================================================
+// TIPOS DE PRODUCTO PARA PEDIDOS PERSONALIZADOS
+// ============================================================
+
+export const customOrderTypes: string[] = [
+  'Torta personalizada',
+  'Mesa dulce',
+  'Genovesa personalizada',
+  'Pan especial',
+  'Otro',
+];
+
+
+// ============================================================
 // HORARIOS DE RECOGIDA — Demostrativos, editables
 // ============================================================
 

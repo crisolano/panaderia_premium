@@ -36,6 +36,7 @@ export function CartDrawer({
   const [neighborhood, setNeighborhood] = useState('');
   const [reference, setReference] = useState('');
   const [pickupTime, setPickupTime] = useState(pickupTimeSlots[0]);
+  const [observations, setObservations] = useState('');
   const [waChoice, setWaChoice] = useState<'primary' | 'secondary'>('primary');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -77,11 +78,12 @@ export function CartDrawer({
     const message =
       `¡Hola ${siteConfig.name}! Quiero hacer el siguiente pedido:\n\n` +
       `*Productos:*\n` + lines.join('\n') +
-      `\n\n*Total: ${formatCOP(totalPrice)}*\n\n` +
+      `\n\n*Total referencial: ${formatCOP(totalPrice)}*\n\n` +
       `*Datos del cliente:*\n` +
       `*Nombre:* ${name}\n` +
       `*Teléfono:* ${phone}\n\n` +
       `*Entrega:*\n` + deliveryInfo +
+      (observations.trim() ? `\n\n*Observaciones:* ${observations}` : '') +
       `\n\n¡Gracias!`;
 
     const url = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
@@ -375,6 +377,20 @@ export function CartDrawer({
                 </div>
               </div>
 
+              {/* Observaciones */}
+              <div>
+                <label className="block text-cafe-300 text-xs font-medium mb-1.5">
+                  Observaciones del pedido (opcional)
+                </label>
+                <textarea
+                  value={observations}
+                  onChange={(e) => setObservations(e.target.value)}
+                  rows={2}
+                  placeholder="Ej. Sin azúcar, para 15 personas, mensaje en la torta..."
+                  className="w-full rounded-lg border-2 border-crema-200 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm placeholder:text-cafe-300/40 focus:outline-none focus:border-terracota-400 transition-colors"
+                />
+              </div>
+
               {/* Resumen del pedido */}
               <div className="bg-crema-200/60 rounded-xl p-4">
                 <p className="text-cafe-500 font-medium text-sm mb-3">Resumen del pedido</p>
@@ -404,10 +420,10 @@ export function CartDrawer({
                 className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1FB855] text-white font-semibold py-4 rounded-full transition-colors shadow-lg"
               >
                 <MessageCircle size={20} />
-                Enviar pedido por WhatsApp
+                Finalizar pedido por WhatsApp
               </button>
               <p className="text-center text-xs text-cafe-300/60 mt-3">
-                Se abrirá WhatsApp con todos los datos del pedido.
+                Se abrirá WhatsApp con todos los datos del pedido. El precio y la disponibilidad se confirman en el chat.
               </p>
             </div>
           </>
