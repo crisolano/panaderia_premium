@@ -1,5 +1,5 @@
 import { MessageCircle, Truck, Sparkles } from 'lucide-react';
-import { images } from '@/data/site';
+import { images, siteConfig } from '@/data/site';
 
 const values = [
   {
@@ -28,17 +28,31 @@ export function About() {
           <div className="relative">
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
               <img
-                src={images.about}
-                alt=""
+                src={images.about.src}
+                srcSet={images.about.srcSet}
+                sizes="(min-width: 1024px) 560px, 90vw"
+                width={images.about.width}
+                height={images.about.height}
+                alt={images.about.alt}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="hidden sm:block absolute -bottom-8 -right-6 w-56 h-56 rounded-[1.5rem] overflow-hidden shadow-xl border-8 border-crema-100">
               <img
-                src={images.breadOven}
-                alt=""
+                src={images.local.src}
+                srcSet={images.local.srcSet}
+                sizes="224px"
+                width={images.local.width}
+                height={images.local.height}
+                alt={images.local.alt}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
+            </div>
+            <div className="absolute -top-5 -left-3 bg-verde-400 text-crema-100 rounded-2xl px-5 py-4 shadow-lg">
+              <p className="text-xs opacity-90">Desde</p>
+              <p className="font-serif text-3xl leading-none mt-0.5">{siteConfig.founded}</p>
             </div>
           </div>
 
@@ -48,10 +62,10 @@ export function About() {
               Nosotros
             </span>
             <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-serif text-cafe-500 leading-tight text-balance">
-              Naturalmente delicioso
+              Nuestra panadería en Piedecuesta
             </h2>
             <p className="mt-6 text-cafe-300 text-lg leading-relaxed">
-              Ricuras del Maíz es una panadería de Piedecuesta, Santander. Atendemos pedidos con domicilio y recogida en tienda, y hacemos pedidos personalizados para tus celebraciones.
+              Ricuras del Maíz es una panadería de Piedecuesta, Santander, desde {siteConfig.founded}. Atendemos pedidos con domicilio y recogida en tienda, y hacemos pedidos personalizados para tus celebraciones.
             </p>
 
             <div className="mt-10 space-y-5">

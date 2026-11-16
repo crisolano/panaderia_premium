@@ -1,3 +1,11 @@
+import hero800 from '@/img/web/hero-800.webp';
+import hero1280 from '@/img/web/hero-1280.webp';
+import hero1600 from '@/img/web/hero-1600.webp';
+import about480 from '@/img/web/about-480.webp';
+import about800 from '@/img/web/about-800.webp';
+import local240 from '@/img/web/local-240.webp';
+import local480 from '@/img/web/local-480.webp';
+
 // ============================================================
 // CONFIGURACIÓN DEL SITIO — Ricuras del Maíz
 // Un valor vacío ('') o un arreglo vacío oculta esa sección del sitio.
@@ -7,6 +15,7 @@
 export const siteConfig = {
   name: 'Ricuras del Maíz',
   tagline: 'Naturalmente delicioso',
+  founded: 2002, // confirmado por el negocio (también está en el letrero del local)
   city: 'Piedecuesta, Santander, Colombia',
   address: 'Calle 3 #12-07, Barrio Villanueva',
   // Dos números de WhatsApp independientes. Formato internacional sin "+" ni espacios.
@@ -244,10 +253,38 @@ export const testimonials: Testimonial[] = [];
 // IMÁGENES DEL SITIO — Editables
 // ============================================================
 
-export const images = {
-  hero: 'https://images.pexels.com/photos/7877994/pexels-photo-7877994.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  about: 'https://images.pexels.com/photos/30005123/pexels-photo-30005123.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  breadOven: 'https://images.pexels.com/photos/35993723/pexels-photo-35993723.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+// Fotos reales del local (src/img/web, WebP comprimido sin metadatos).
+// srcSet permite que el navegador descargue solo el tamaño que necesita.
+export interface SiteImage {
+  src: string;
+  srcSet: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+export const images: Record<'hero' | 'about' | 'local', SiteImage> = {
+  hero: {
+    src: hero1280,
+    srcSet: `${hero800} 800w, ${hero1280} 1280w, ${hero1600} 1600w`,
+    width: 1600,
+    height: 1200,
+    alt: 'Mesa con productos de Ricuras del Maíz: hojaldres, pastelitos, torta y café',
+  },
+  about: {
+    src: about800,
+    srcSet: `${about480} 480w, ${about800} 800w`,
+    width: 800,
+    height: 1067,
+    alt: 'Letrero de la panadería Ricuras del Maíz, desde el 2002',
+  },
+  local: {
+    src: local480,
+    srcSet: `${local240} 240w, ${local480} 480w`,
+    width: 480,
+    height: 640,
+    alt: 'Letrero de neón dentro del local: dónde el café, el pan y un dulce postre alegran tu vida',
+  },
 };
 
 // ============================================================
@@ -279,13 +316,14 @@ export const googleMaps = {
   embedUrl: '',
   // Clave API leída desde .env (VITE_GOOGLE_MAPS_EMBED_API_KEY)
   apiKey: import.meta.env.VITE_GOOGLE_MAPS_EMBED_API_KEY ?? '',
-  // Dirección usada para el mapa y el botón "Cómo llegar". Se busca por dirección
+  // Coordenadas tomadas de las fotos del local (GPS de 15 fotos, coinciden entre sí).
+  // Google ubica la dirección escrita unos 200 m más al suroeste, por eso se prefiere esto.
+  coordinates: { lat: 6.99336, lng: -73.04861 },
+  // Dirección usada si no hubiera coordenadas. Se busca por dirección
   // (no por nombre) para no depender de que exista una ficha del negocio.
   query: `${siteConfig.address}, ${siteConfig.city}`,
   // Sustituir por el enlace exacto de la ficha de Google Maps cuando exista.
-  directionsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    `${siteConfig.address}, ${siteConfig.city}`
-  )}`,
+  directionsUrl: `https://www.google.com/maps/dir/?api=1&destination=6.99336,-73.04861`,
 };
 
 // ============================================================

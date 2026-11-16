@@ -12,8 +12,9 @@ export function Contact() {
       // Sin Place ID, usar búsqueda por nombre + dirección
       return `https://www.google.com/maps/embed/v1/search?key=${googleMaps.apiKey}&q=${encodeURIComponent(googleMaps.query)}`;
     }
-    // Sin API key: embed público por dirección (no requiere clave).
-    return `https://www.google.com/maps?q=${encodeURIComponent(googleMaps.query)}&output=embed`;
+    // Sin API key: embed público por coordenadas del local (no requiere clave).
+    const { lat, lng } = googleMaps.coordinates;
+    return `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
   })();
 
   return (

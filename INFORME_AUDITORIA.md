@@ -90,3 +90,11 @@ Proyecto sin pruebas automatizadas; no se agregó framework de pruebas.
 4. Probar el flujo completo desde un teléfono con WhatsApp.
 5. Añadir favicon y metadatos para compartir (Open Graph).
 6. Definir con el negocio costo y cobertura de domicilio.
+
+## Actualización (fotos, mapa y Google)
+
+- Se añadieron las fotos reales del local (WebP comprimido, sin metadatos GPS; ~0,8 MB en total para la portada y "Nosotros") y "Desde 2002" (confirmado por el negocio). Las fotos de los productos del catálogo siguen siendo de stock hasta que el negocio confirme qué vende.
+- Mapa y "Cómo llegar" usan las coordenadas de las fotos del local. La dirección escrita cae ~200 m más al suroeste en Google.
+- Existe en Google Maps una ficha "panaderia las ricuras del maiz 2025" en otro lugar (~1,2 km). Detalle y pasos en `GUIA_GOOGLE_Y_DOMINIO.md`.
+- Se añadieron datos estructurados `Bakery`, etiquetas Open Graph básicas y `robots.txt`.
+- Aviso: las fotos originales `.HEIC` de `src/img/` conservan sus metadatos con la ubicación GPS y el repositorio es público. Es la ubicación del local, que ya es pública, pero conviene saberlo. Las versiones JPG y WebP no llevan GPS.

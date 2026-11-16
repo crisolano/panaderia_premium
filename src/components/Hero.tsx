@@ -14,18 +14,23 @@ export function Hero({ onExplore }: HeroProps) {
       {/* Imagen de fondo */}
       <div className="absolute inset-0">
         <img
-          src={images.hero}
-          alt=""
+          src={images.hero.src}
+          srcSet={images.hero.srcSet}
+          sizes="100vw"
+          width={images.hero.width}
+          height={images.hero.height}
+          alt={images.hero.alt}
+          fetchPriority="high"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-cafe-900/85 via-cafe-900/60 to-cafe-900/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cafe-900/95 via-cafe-900/80 to-cafe-900/45" />
       </div>
 
       {/* Contenido */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
         <div className="max-w-2xl">
           <span className="inline-block px-4 py-1.5 rounded-full bg-maiz-300/20 backdrop-blur-sm border border-maiz-300/30 text-maiz-100 text-sm font-medium tracking-wide mb-6 animate-slide-up">
-            Panadería · {siteConfig.city}
+            Panadería · Desde {siteConfig.founded} · {siteConfig.city}
           </span>
           <h1 className="text-crema-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.1] text-balance animate-slide-up">
             {siteConfig.tagline}
