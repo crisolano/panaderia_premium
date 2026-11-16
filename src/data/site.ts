@@ -30,8 +30,8 @@ export const siteConfig = {
   whatsappDisplaySecondary: '+57 320 813 3071',
   // Pendientes de confirmar con el negocio. Mientras estén vacíos no se muestran.
   email: '',
-  // Días de atención por confirmar: solo se muestra el rango de horas.
-  hours: '6:00 a.m. – 9:00 p.m.',
+  // Confirmado por el negocio. Si cambia, actualizar también openingHoursSpecification en index.html.
+  hours: 'Todos los días: 6:00 a.m. – 9:00 p.m.',
   social: {
     instagram: '',
     facebook: '',

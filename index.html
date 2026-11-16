@@ -14,7 +14,7 @@
     <meta property="og:title" content="Panadería Ricuras del Maíz | Piedecuesta, Santander" />
     <meta property="og:description" content="Naturalmente delicioso. Panadería en Piedecuesta, Santander, desde 2002. Pedidos por WhatsApp con domicilio o recogida en tienda." />
     <!-- Datos estructurados para Google. Solo datos confirmados y visibles en la página.
-         Pendiente cuando existan: url (dominio), image (URL absoluta) y openingHoursSpecification. -->
+         Pendiente cuando existan: url (dominio) e image (URL absoluta). -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -30,7 +30,13 @@
           "addressRegion": "Santander",
           "addressCountry": "CO"
         },
-        "geo": { "@type": "GeoCoordinates", "latitude": 6.99336, "longitude": -73.04861 }
+        "geo": { "@type": "GeoCoordinates", "latitude": 6.99336, "longitude": -73.04861 },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "06:00",
+          "closes": "21:00"
+        }
       }
     </script>
   </head>
