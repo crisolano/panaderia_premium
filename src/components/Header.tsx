@@ -11,6 +11,7 @@ const navLinks = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'nosotros', label: 'Nosotros' },
   { id: 'productos', label: 'Productos' },
+  { id: 'personalizar', label: 'Personalizar' },
   { id: 'contacto', label: 'Contacto' },
 ];
 
@@ -54,7 +55,7 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
         </button>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-9">
+        <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.id}>
               <button
@@ -86,6 +87,7 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
             className="md:hidden w-11 h-11 rounded-full bg-crema-200 text-cafe-500 flex items-center justify-center"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Menú"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>

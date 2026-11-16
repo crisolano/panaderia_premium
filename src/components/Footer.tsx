@@ -21,16 +21,22 @@ export function Footer() {
               <span className="font-serif text-xl text-crema-100">{siteConfig.name}</span>
             </div>
             <p className="mt-4 max-w-sm leading-relaxed">
-              {siteConfig.tagline}. Panadería artesanal de maíz en {siteConfig.city}. Tortas, genovesas, mantecadas, buñuelos y panes especiales.
+              {siteConfig.tagline}. Panadería en {siteConfig.city}. Pedidos por WhatsApp con domicilio o recogida en tienda.
             </p>
-            <div className="mt-5 flex gap-3">
-              <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-crema-100/10 hover:bg-maiz-300 hover:text-cafe-900 flex items-center justify-center text-crema-100 transition-colors">
-                <Instagram size={18} />
-              </a>
-              <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-crema-100/10 hover:bg-maiz-300 hover:text-cafe-900 flex items-center justify-center text-crema-100 transition-colors">
-                <Facebook size={18} />
-              </a>
-            </div>
+            {(siteConfig.social.instagram || siteConfig.social.facebook) && (
+              <div className="mt-5 flex gap-3">
+                {siteConfig.social.instagram && (
+                  <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-crema-100/10 hover:bg-maiz-300 hover:text-cafe-900 flex items-center justify-center text-crema-100 transition-colors">
+                    <Instagram size={18} />
+                  </a>
+                )}
+                {siteConfig.social.facebook && (
+                  <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-crema-100/10 hover:bg-maiz-300 hover:text-cafe-900 flex items-center justify-center text-crema-100 transition-colors">
+                    <Facebook size={18} />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Navegación */}
@@ -41,6 +47,7 @@ export function Footer() {
                 { id: 'inicio', label: 'Inicio' },
                 { id: 'nosotros', label: 'Nosotros' },
                 { id: 'productos', label: 'Productos' },
+                { id: 'personalizar', label: 'Personalizar' },
                 { id: 'contacto', label: 'Contacto' },
               ].map((l) => (
                 <li key={l.id}>
@@ -61,15 +68,15 @@ export function Footer() {
               {whatsappOptions.map((opt) => (
                 <li key={opt.id}>{opt.display}</li>
               ))}
-              <li>{siteConfig.email}</li>
-              <li>{siteConfig.hours}</li>
+              {siteConfig.email && <li>{siteConfig.email}</li>}
+              {siteConfig.hours && <li>{siteConfig.hours}</li>}
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-crema-100/10 text-sm flex flex-col sm:flex-row justify-between items-center gap-3">
           <p>© {year} {siteConfig.name}. Todos los derechos reservados.</p>
-          <p>Hecho con maíz y amor en Santander.</p>
+          <p>Piedecuesta, Santander</p>
         </div>
       </div>
     </footer>

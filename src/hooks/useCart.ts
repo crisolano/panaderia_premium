@@ -1,18 +1,31 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { Product } from '@/data/site';
+import { products, type Product } from '@/data/site';
 
 export interface CartItem extends Product {
   quantity: number;
 }
 
-const STORAGE_KEY = 'bakery-cart-v1';
+const STORAGE_KEY = 'bakery-cart-v2';
+export const MAX_QTY = 99;
 
+const clampQty = (n: number) => Math.min(MAX_QTY, Math.max(0, Math.floor(n)));
+
+// Solo se guarda { id, quantity }; nombre y precio se leen siempre del catálogo
+// actual, así un precio viejo o un dato alterado en localStorage no llega al pedido.
 function loadCart(): CartItem[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    if (!Array.isArray(parsed)) return [];
+    const items: CartItem[] = [];
+    for (const entry of parsed) {
+      const product = products.find((p) => p.id === entry?.id);
+      const quantity = clampQty(Number(entry?.quantity));
+      // Los pedidos personalizados se cotizan por WhatsApp, no van al carrito.
+      if (product && product.category !== 'pedidos-personalizados' && quantity > 0) {
+        items.push({ ...product, quantity });
+      }
+    }
+    return items;
   } catch {
     return [];
   }
@@ -24,7 +37,10 @@ export function useCart() {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(items.map(({ id, quantity }) => ({ id, quantity })))
+      );
     } catch {
       /* storage lleno o no disponible */
     }
@@ -35,10 +51,10 @@ export function useCart() {
       const existing = prev.find((i) => i.id === product.id);
       if (existing) {
         return prev.map((i) =>
-          i.id === product.id ? { ...i, quantity: i.quantity + qty } : i
+          i.id === product.id ? { ...i, quantity: clampQty(i.quantity + qty) } : i
         );
       }
-      return [...prev, { ...product, quantity: qty }];
+      return [...prev, { ...product, quantity: clampQty(qty) }];
     });
     setIsOpen(true);
   }, []);
@@ -50,7 +66,7 @@ export function useCart() {
   const updateQuantity = useCallback((id: string, quantity: number) => {
     setItems((prev) =>
       prev
-        .map((i) => (i.id === id ? { ...i, quantity: Math.max(0, quantity) } : i))
+        .map((i) => (i.id === id ? { ...i, quantity: clampQty(quantity) } : i))
         .filter((i) => i.quantity > 0)
     );
   }, []);
@@ -58,7 +74,10 @@ export function useCart() {
   const clear = useCallback(() => setItems([]), []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
-  const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  // El total solo existe si todos los productos tienen precio confirmado.
+  const totalPrice = items.every((i) => i.price !== undefined)
+    ? items.reduce((sum, i) => sum + (i.price ?? 0) * i.quantity, 0)
+    : null;
 
   return {
     items,

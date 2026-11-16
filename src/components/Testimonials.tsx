@@ -2,6 +2,8 @@ import { Star, Quote } from 'lucide-react';
 import { testimonials } from '@/data/site';
 
 export function Testimonials() {
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="py-24 sm:py-32 bg-cafe-500 relative overflow-hidden">
       {/* patrón decorativo */}

@@ -4,9 +4,10 @@ import { ProductCard } from './ProductCard';
 
 interface ProductsProps {
   onAdd: (product: Product) => void;
+  onQuote: () => void;
 }
 
-export function Products({ onAdd }: ProductsProps) {
+export function Products({ onAdd, onQuote }: ProductsProps) {
   const [active, setActive] = useState<Category | 'todos'>('todos');
 
   const filtered = useMemo(
@@ -27,10 +28,10 @@ export function Products({ onAdd }: ProductsProps) {
             Nuestro catálogo
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-serif text-cafe-500 leading-tight text-balance">
-            Productos horneados cada mañana
+            Nuestros productos
           </h2>
           <p className="mt-5 text-cafe-300/80 text-lg">
-            Selecciona tu favorito y agrégalo al carrito. Al finalizar, tu pedido se envía directamente por WhatsApp.
+            Agrega tus favoritos al carrito. Al finalizar, tu pedido se envía por WhatsApp y allí confirmamos precio y disponibilidad.
           </p>
         </div>
 
@@ -40,6 +41,7 @@ export function Products({ onAdd }: ProductsProps) {
             <button
               key={f.id}
               onClick={() => setActive(f.id)}
+              aria-pressed={active === f.id}
               className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all ${
                 active === f.id
                   ? 'bg-maiz-300 text-cafe-900 shadow-md'
@@ -54,7 +56,7 @@ export function Products({ onAdd }: ProductsProps) {
         {/* Grid */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} onAdd={onAdd} />
+            <ProductCard key={p.id} product={p} onAdd={onAdd} onQuote={onQuote} />
           ))}
         </div>
       </div>

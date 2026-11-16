@@ -1,21 +1,21 @@
-import { Wheat, Clock, HeartHandshake } from 'lucide-react';
+import { MessageCircle, Truck, Sparkles } from 'lucide-react';
 import { images } from '@/data/site';
 
 const values = [
   {
-    icon: Wheat,
-    title: 'Masa de maíz',
-    text: 'El maíz es el corazón de nuestra cocina. Lo molemos y lo transformamos en cada producto con recetas tradicionales.',
+    icon: MessageCircle,
+    title: 'Pedidos por WhatsApp',
+    text: 'Armas tu pedido en la web y lo enviamos por WhatsApp. Allí confirmamos precio y disponibilidad.',
   },
   {
-    icon: Clock,
-    title: 'Hecho cada día',
-    text: 'Cada madrugada preparamos todo desde cero. Nada industrial, nada congelado. Solo ingredientes frescos.',
+    icon: Truck,
+    title: 'Domicilio o recogida',
+    text: 'Recibe tu pedido en casa o pásalo a recoger en nuestra tienda de Piedecuesta.',
   },
   {
-    icon: HeartHandshake,
-    title: 'Receta familiar',
-    text: 'Nuestras recetas pasan de generación en generación. El sabor de la tradición santandereana en cada bocado.',
+    icon: Sparkles,
+    title: 'Pedidos personalizados',
+    text: 'Cuéntanos qué necesitas, envía fotos de referencia por el chat y te cotizamos.',
   },
 ];
 
@@ -29,20 +29,16 @@ export function About() {
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
               <img
                 src={images.about}
-                alt="Preparación artesanal de arepas de maíz"
+                alt=""
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="hidden sm:block absolute -bottom-8 -right-6 w-56 h-56 rounded-[1.5rem] overflow-hidden shadow-xl border-8 border-crema-100">
               <img
                 src={images.breadOven}
-                alt="Panes especiales artesanales"
+                alt=""
                 className="w-full h-full object-cover"
               />
-            </div>
-            <div className="absolute -top-5 -left-3 bg-verde-400 text-crema-100 rounded-2xl px-5 py-4 shadow-lg">
-              <p className="font-serif text-3xl leading-none">100%</p>
-              <p className="text-xs mt-1 opacity-90">Artesanal</p>
             </div>
           </div>
 
@@ -52,13 +48,10 @@ export function About() {
               Nosotros
             </span>
             <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-serif text-cafe-500 leading-tight text-balance">
-              Tradición santandereana hecha con maíz y amor
+              Naturalmente delicioso
             </h2>
             <p className="mt-6 text-cafe-300 text-lg leading-relaxed">
-              Ricuras del Maíz nació en Piedecuesta con una idea simple: rescatar el sabor de la repostería tradicional colombiana usando el maíz como ingrediente principal. Desde las tortas hasta los buñuelos, todo se prepara a mano, cada día.
-            </p>
-            <p className="mt-4 text-cafe-300/80 leading-relaxed">
-              Nuestra cocina es un homenaje a las recetas de nuestras abuelas, adaptadas con creatividad y mucho cariño para que cada bocado te lleve a casa.
+              Ricuras del Maíz es una panadería de Piedecuesta, Santander. Atendemos pedidos con domicilio y recogida en tienda, y hacemos pedidos personalizados para tus celebraciones.
             </p>
 
             <div className="mt-10 space-y-5">

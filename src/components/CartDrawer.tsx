@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag, MessageCircle, ArrowLeft, Truck, Store, User, Phone, MapPin, Clock } from 'lucide-react';
 import type { CartItem } from '@/hooks/useCart';
-import { formatCOP } from '@/hooks/useCart';
-import { siteConfig, whatsappOptions, pickupTimeSlots } from '@/data/site';
+import { formatCOP, MAX_QTY } from '@/hooks/useCart';
+import { siteConfig, whatsappOptions } from '@/data/site';
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   items: CartItem[];
   totalItems: number;
-  totalPrice: number;
+  totalPrice: number | null; // null = hay productos sin precio confirmado
   onUpdateQty: (id: string, qty: number) => void;
   onRemove: (id: string) => void;
   onClear: () => void;
@@ -35,15 +35,22 @@ export function CartDrawer({
   const [address, setAddress] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [reference, setReference] = useState('');
-  const [pickupTime, setPickupTime] = useState(pickupTimeSlots[0]);
+  const [pickupTime, setPickupTime] = useState('');
   const [observations, setObservations] = useState('');
   const [waChoice, setWaChoice] = useState<'primary' | 'secondary'>('primary');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (ev: KeyboardEvent) => ev.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
+
   const validate = (): boolean => {
     const e: Record<string, string> = {};
     if (!name.trim()) e.name = 'Ingresa tu nombre';
-    if (!phone.trim()) e.phone = 'Ingresa tu teléfono';
+    if (phone.replace(/\D/g, '').length < 7) e.phone = 'Ingresa un teléfono válido (mínimo 7 dígitos)';
     if (delivery === 'domicilio') {
       if (!address.trim()) e.address = 'Ingresa la dirección';
       if (!neighborhood.trim()) e.neighborhood = 'Ingresa el barrio';
@@ -56,9 +63,10 @@ export function CartDrawer({
     if (!validate()) return;
 
     const wa = whatsappOptions.find((o) => o.id === waChoice)!;
-    const lines = items.map(
-      (i, idx) =>
-        `${idx + 1}. ${i.name} — ${i.quantity} × ${formatCOP(i.price)} = ${formatCOP(i.price * i.quantity)}`
+    const lines = items.map((i, idx) =>
+      i.price !== undefined
+        ? `${idx + 1}. ${i.name} — ${i.quantity} × ${formatCOP(i.price)} = ${formatCOP(i.price * i.quantity)}`
+        : `${idx + 1}. ${i.name} — ${i.quantity} unidad(es)`
     );
 
     let deliveryInfo: string;
@@ -71,14 +79,16 @@ export function CartDrawer({
     } else {
       deliveryInfo =
         `*Tipo:* Recogida en tienda\n` +
-        `*Hora preferida:* ${pickupTime}\n` +
+        (pickupTime.trim() ? `*Hora preferida:* ${pickupTime.trim()}\n` : '') +
         `*Dirección de tienda:* ${siteConfig.address}`;
     }
 
     const message =
       `¡Hola ${siteConfig.name}! Quiero hacer el siguiente pedido:\n\n` +
       `*Productos:*\n` + lines.join('\n') +
-      `\n\n*Total referencial: ${formatCOP(totalPrice)}*\n\n` +
+      (totalPrice !== null
+        ? `\n\n*Total referencial: ${formatCOP(totalPrice)}*\n\n`
+        : `\n\n_Precios por confirmar._\n\n`) +
       `*Datos del cliente:*\n` +
       `*Nombre:* ${name}\n` +
       `*Teléfono:* ${phone}\n\n` +
@@ -87,7 +97,7 @@ export function CartDrawer({
       `\n\n¡Gracias!`;
 
     const url = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const goCheckout = () => {
@@ -114,10 +124,13 @@ export function CartDrawer({
 
       {/* Panel */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 z-[70] w-full max-w-md bg-crema-100 shadow-2xl flex flex-col transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 bottom-0 z-[70] w-full max-w-md bg-crema-100 shadow-2xl flex flex-col transition-[transform,visibility] duration-300 ${
+          isOpen ? 'translate-x-0 visible' : 'translate-x-full invisible'
         }`}
+        role="dialog"
+        aria-modal="true"
         aria-label="Carrito de compras"
+        aria-hidden={!isOpen}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-5 border-b border-crema-300 flex-shrink-0">
@@ -134,7 +147,7 @@ export function CartDrawer({
             <ShoppingBag size={22} className="text-terracota-400" />
             <h2 className="font-serif text-xl text-cafe-500">
               {step === 'cart' ? (
-                <>Tu carrito {totalItems > 0 && <span className="text-cafe-300/60 text-base">({totalItems})</span>}</>
+                <>Tu carrito {totalItems > 0 && <span className="text-cafe-300/90 text-base">({totalItems})</span>}</>
               ) : (
                 'Datos del pedido'
               )}
@@ -155,7 +168,7 @@ export function CartDrawer({
               <ShoppingBag size={36} />
             </span>
             <p className="font-serif text-xl text-cafe-500">Tu carrito está vacío</p>
-            <p className="text-cafe-300/70 text-sm">
+            <p className="text-cafe-300/90 text-sm">
               Explora nuestro catálogo y añade tus favoritos.
             </p>
             <button
@@ -181,8 +194,8 @@ export function CartDrawer({
                   />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-serif text-base text-cafe-500 leading-snug">{item.name}</h3>
-                    <p className="text-terracota-400 font-semibold text-sm mt-0.5">
-                      {formatCOP(item.price)}
+                    <p className="text-terracota-500 font-semibold text-sm mt-0.5">
+                      {item.price !== undefined ? formatCOP(item.price) : 'Precio por confirmar'}
                     </p>
 
                     <div className="mt-2 flex items-center justify-between">
@@ -199,7 +212,8 @@ export function CartDrawer({
                         </span>
                         <button
                           onClick={() => onUpdateQty(item.id, item.quantity + 1)}
-                          className="w-7 h-7 rounded-full bg-crema-100 hover:bg-crema-300 text-cafe-500 flex items-center justify-center transition-colors"
+                          disabled={item.quantity >= MAX_QTY}
+                          className="w-7 h-7 rounded-full bg-crema-100 hover:bg-crema-300 text-cafe-500 flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                           aria-label="Aumentar cantidad"
                         >
                           <Plus size={14} />
@@ -220,7 +234,7 @@ export function CartDrawer({
 
               <button
                 onClick={onClear}
-                className="text-sm text-cafe-300/60 hover:text-terracota-400 transition-colors mt-2"
+                className="text-sm text-cafe-300/90 hover:text-terracota-400 transition-colors mt-2"
               >
                 Vaciar carrito
               </button>
@@ -228,12 +242,18 @@ export function CartDrawer({
 
             {/* Footer con total y botón checkout */}
             <div className="border-t border-crema-300 px-5 py-5 bg-crema-50 flex-shrink-0">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-cafe-300 font-medium">Total</span>
-                <span className="font-serif text-2xl text-cafe-500 font-semibold">
-                  {formatCOP(totalPrice)}
-                </span>
-              </div>
+              {totalPrice !== null ? (
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-cafe-300 font-medium">Total referencial</span>
+                  <span className="font-serif text-2xl text-cafe-500 font-semibold">
+                    {formatCOP(totalPrice)}
+                  </span>
+                </div>
+              ) : (
+                <p className="mb-4 text-sm text-cafe-300">
+                  Los precios se confirman por WhatsApp al enviar tu pedido.
+                </p>
+              )}
               <button
                 onClick={goCheckout}
                 className="w-full flex items-center justify-center gap-2.5 bg-terracota-400 hover:bg-terracota-500 text-crema-100 font-semibold py-4 rounded-full transition-colors shadow-lg"
@@ -280,6 +300,7 @@ export function CartDrawer({
                     placeholder="Ej. María González"
                     error={errors.name}
                     icon={User}
+                    autoComplete="name"
                   />
                   <Field
                     label="Teléfono"
@@ -288,6 +309,8 @@ export function CartDrawer({
                     placeholder="Ej. 300 123 4567"
                     error={errors.phone}
                     icon={Phone}
+                    type="tel"
+                    autoComplete="tel"
                   />
                 </div>
               </div>
@@ -320,31 +343,28 @@ export function CartDrawer({
                       onChange={setReference}
                       placeholder="Ej. Casa verde, portón negro"
                     />
+                    <p className="text-cafe-300/90 text-xs">
+                      El costo y la cobertura del domicilio se confirman por WhatsApp.
+                    </p>
                   </div>
                 </div>
               ) : (
                 <div>
                   <p className="text-cafe-500 font-medium text-sm mb-3 flex items-center gap-2">
-                    <Clock size={16} /> Hora de recogida
+                    <Clock size={16} /> Recogida en tienda
                   </p>
-                  <p className="text-cafe-300/70 text-xs mb-3">
+                  <p className="text-cafe-300/90 text-xs mb-3">
                     Tienda: {siteConfig.address}
                   </p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {pickupTimeSlots.map((slot) => (
-                      <button
-                        key={slot}
-                        onClick={() => setPickupTime(slot)}
-                        className={`px-2 py-2 rounded-lg text-sm font-medium transition-colors ${
-                          pickupTime === slot
-                            ? 'bg-terracota-400 text-crema-100'
-                            : 'bg-crema-200 text-cafe-500 hover:bg-crema-300'
-                        }`}
-                      >
-                        {slot}
-                      </button>
-                    ))}
-                  </div>
+                  <Field
+                    label="Hora preferida (opcional)"
+                    value={pickupTime}
+                    onChange={setPickupTime}
+                    placeholder="Ej. 4:00 p.m."
+                  />
+                  <p className="text-cafe-300/90 text-xs mt-2">
+                    Confirmamos horario y disponibilidad por WhatsApp.
+                  </p>
                 </div>
               )}
 
@@ -370,7 +390,7 @@ export function CartDrawer({
                       />
                       <div>
                         <p className="text-cafe-500 font-medium text-sm">{opt.label}</p>
-                        <p className="text-cafe-300/70 text-xs">{opt.display}</p>
+                        <p className="text-cafe-300/90 text-xs">{opt.display}</p>
                       </div>
                     </label>
                   ))}
@@ -379,10 +399,11 @@ export function CartDrawer({
 
               {/* Observaciones */}
               <div>
-                <label className="block text-cafe-300 text-xs font-medium mb-1.5">
+                <label htmlFor="cart-observations" className="block text-cafe-300 text-xs font-medium mb-1.5">
                   Observaciones del pedido (opcional)
                 </label>
                 <textarea
+                  id="cart-observations"
                   value={observations}
                   onChange={(e) => setObservations(e.target.value)}
                   rows={2}
@@ -399,17 +420,19 @@ export function CartDrawer({
                     <div key={item.id} className="flex justify-between text-sm text-cafe-300">
                       <span className="truncate pr-2">{item.name} × {item.quantity}</span>
                       <span className="font-medium text-cafe-500 whitespace-nowrap">
-                        {formatCOP(item.price * item.quantity)}
+                        {item.price !== undefined ? formatCOP(item.price * item.quantity) : 'Por confirmar'}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-3 pt-3 border-t border-crema-300/60 flex justify-between items-center">
-                  <span className="text-cafe-500 font-medium">Total</span>
-                  <span className="font-serif text-xl text-cafe-500 font-semibold">
-                    {formatCOP(totalPrice)}
-                  </span>
-                </div>
+                {totalPrice !== null && (
+                  <div className="mt-3 pt-3 border-t border-crema-300/60 flex justify-between items-center">
+                    <span className="text-cafe-500 font-medium">Total referencial</span>
+                    <span className="font-serif text-xl text-cafe-500 font-semibold">
+                      {formatCOP(totalPrice)}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -422,7 +445,7 @@ export function CartDrawer({
                 <MessageCircle size={20} />
                 Finalizar pedido por WhatsApp
               </button>
-              <p className="text-center text-xs text-cafe-300/60 mt-3">
+              <p className="text-center text-xs text-cafe-300/90 mt-3">
                 Se abrirá WhatsApp con todos los datos del pedido. El precio y la disponibilidad se confirman en el chat.
               </p>
             </div>
@@ -451,6 +474,7 @@ function DeliveryCard({
   return (
     <button
       onClick={onClick}
+      aria-pressed={active}
       className={`flex flex-col items-center gap-1.5 p-4 rounded-xl border-2 transition-colors ${
         active
           ? 'border-terracota-400 bg-terracota-50 text-cafe-500'
@@ -459,7 +483,7 @@ function DeliveryCard({
     >
       <Icon size={24} className={active ? 'text-terracota-400' : 'text-cafe-300'} />
       <span className="font-medium text-sm">{label}</span>
-      <span className="text-xs text-cafe-300/70">{sub}</span>
+      <span className="text-xs text-cafe-300/90">{sub}</span>
     </button>
   );
 }
@@ -471,6 +495,8 @@ function Field({
   placeholder,
   error,
   icon: Icon,
+  type = 'text',
+  autoComplete,
 }: {
   label: string;
   value: string;
@@ -478,16 +504,23 @@ function Field({
   placeholder?: string;
   error?: string;
   icon?: typeof User;
+  type?: string;
+  autoComplete?: string;
 }) {
+  const id = useId();
   return (
     <div>
-      <label className="block text-cafe-300 text-xs font-medium mb-1.5">{label}</label>
+      <label htmlFor={id} className="block text-cafe-300 text-xs font-medium mb-1.5">{label}</label>
       <div className="relative">
         {Icon && (
           <Icon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-cafe-300/50" />
         )}
         <input
-          type="text"
+          id={id}
+          type={type}
+          autoComplete={autoComplete}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
@@ -496,7 +529,7 @@ function Field({
           }`}
         />
       </div>
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && <p id={`${id}-error`} role="alert" className="text-red-600 text-xs mt-1">{error}</p>}
     </div>
   );
 }

@@ -25,6 +25,10 @@ export default function App() {
     document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  const handleQuote = useCallback(() => {
+    document.getElementById('personalizar')?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="min-h-screen bg-cream-100">
       <Header cartCount={cart.totalItems} onCartClick={() => cart.setIsOpen(true)} />
@@ -32,7 +36,7 @@ export default function App() {
       <main>
         <Hero onExplore={handleExplore} />
         <About />
-        <Products onAdd={handleAdd} />
+        <Products onAdd={handleAdd} onQuote={handleQuote} />
         <CustomOrder />
         <Testimonials />
         <Contact />

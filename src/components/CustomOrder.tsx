@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { MessageCircle, Sparkles, Image as ImageIcon, Send } from 'lucide-react';
+import { MessageCircle, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { siteConfig, customOrderTypes, whatsappOptions } from '@/data/site';
+
+// Fecha local de hoy (YYYY-MM-DD), para no aceptar fechas pasadas.
+const todayISO = () => new Date().toLocaleDateString('sv-SE');
 
 export function CustomOrder() {
   const [productType, setProductType] = useState(customOrderTypes[0]);
@@ -15,7 +18,10 @@ export function CustomOrder() {
   const validate = (): boolean => {
     const e: Record<string, string> = {};
     if (!description.trim()) e.description = 'Describe el diseño o características deseadas';
-    if (!date.trim()) e.date = 'Indica la fecha en que lo necesitas';
+    if (!/^\d+$/.test(quantity.trim()) || Number(quantity) < 1 || Number(quantity) > 999)
+      e.quantity = 'Indica una cantidad entera entre 1 y 999';
+    if (!date) e.date = 'Indica la fecha en que lo necesitas';
+    else if (date < todayISO()) e.date = 'La fecha no puede ser anterior a hoy';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -29,14 +35,14 @@ export function CustomOrder() {
       `¡Hola ${siteConfig.name}! Quisiera solicitar una cotización para un pedido personalizado.\n\n` +
       `*Tipo de producto:* ${productType}\n` +
       `*Descripción del diseño:* ${description}\n` +
-      `*Cantidad:* ${quantity}\n` +
+      `*Cantidad:* ${quantity.trim()}\n` +
       `*Fecha necesaria:* ${date}\n` +
       (budget.trim() ? `*Presupuesto aproximado:* ${budget}\n` : '') +
       (observations.trim() ? `*Observaciones:* ${observations}\n` : '') +
-      `\n_*Nota:_ Tengo imágenes de referencia que enviaré en este chat.`;
+      `\n_Nota:_ Puedo enviar imágenes de referencia por este chat.`;
 
     const url = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -58,10 +64,11 @@ export function CustomOrder() {
           <div className="grid sm:grid-cols-2 gap-5">
             {/* Tipo de producto */}
             <div>
-              <label className="block text-cafe-300 text-xs font-medium mb-1.5">
+              <label htmlFor="co-type" className="block text-cafe-300 text-xs font-medium mb-1.5">
                 Tipo de producto
               </label>
               <select
+                id="co-type"
                 value={productType}
                 onChange={(e) => setProductType(e.target.value)}
                 className="w-full rounded-lg border-2 border-crema-200 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm focus:outline-none focus:border-verde-300 transition-colors"
@@ -74,25 +81,37 @@ export function CustomOrder() {
 
             {/* Cantidad */}
             <div>
-              <label className="block text-cafe-300 text-xs font-medium mb-1.5">
+              <label htmlFor="co-qty" className="block text-cafe-300 text-xs font-medium mb-1.5">
                 Cantidad
               </label>
               <input
+                id="co-qty"
                 type="number"
+                inputMode="numeric"
                 min="1"
+                max="999"
+                step="1"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full rounded-lg border-2 border-crema-200 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm focus:outline-none focus:border-verde-300 transition-colors"
+                aria-invalid={Boolean(errors.quantity)}
+                aria-describedby={errors.quantity ? 'co-qty-error' : undefined}
+                className={`w-full rounded-lg border-2 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm focus:outline-none transition-colors ${
+                  errors.quantity ? 'border-red-400 focus:border-red-500' : 'border-crema-200 focus:border-verde-300'
+                }`}
               />
+              {errors.quantity && <p id="co-qty-error" role="alert" className="text-red-600 text-xs mt-1">{errors.quantity}</p>}
             </div>
           </div>
 
           {/* Descripción del diseño */}
           <div className="mt-5">
-            <label className="block text-cafe-300 text-xs font-medium mb-1.5">
-              Descripción del diseño <span className="text-terracota-400">*</span>
+            <label htmlFor="co-desc" className="block text-cafe-300 text-xs font-medium mb-1.5">
+              Descripción del diseño <span className="text-terracota-500">*</span>
             </label>
             <textarea
+              id="co-desc"
+              aria-invalid={Boolean(errors.description)}
+              aria-describedby={errors.description ? 'co-desc-error' : undefined}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
@@ -101,32 +120,37 @@ export function CustomOrder() {
                 errors.description ? 'border-red-400 focus:border-red-500' : 'border-crema-200 focus:border-verde-300'
               }`}
             />
-            {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+            {errors.description && <p id="co-desc-error" role="alert" className="text-red-600 text-xs mt-1">{errors.description}</p>}
           </div>
 
           <div className="grid sm:grid-cols-2 gap-5 mt-5">
             {/* Fecha */}
             <div>
-              <label className="block text-cafe-300 text-xs font-medium mb-1.5">
-                Fecha en que lo necesitas <span className="text-terracota-400">*</span>
+              <label htmlFor="co-date" className="block text-cafe-300 text-xs font-medium mb-1.5">
+                Fecha en que lo necesitas <span className="text-terracota-500">*</span>
               </label>
               <input
+                id="co-date"
                 type="date"
+                min={todayISO()}
+                aria-invalid={Boolean(errors.date)}
+                aria-describedby={errors.date ? 'co-date-error' : undefined}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 className={`w-full rounded-lg border-2 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm focus:outline-none transition-colors ${
                   errors.date ? 'border-red-400 focus:border-red-500' : 'border-crema-200 focus:border-verde-300'
                 }`}
               />
-              {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+              {errors.date && <p id="co-date-error" role="alert" className="text-red-600 text-xs mt-1">{errors.date}</p>}
             </div>
 
             {/* Presupuesto opcional */}
             <div>
-              <label className="block text-cafe-300 text-xs font-medium mb-1.5">
+              <label htmlFor="co-budget" className="block text-cafe-300 text-xs font-medium mb-1.5">
                 Presupuesto aproximado (opcional)
               </label>
               <input
+                id="co-budget"
                 type="text"
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
@@ -138,10 +162,11 @@ export function CustomOrder() {
 
           {/* Observaciones */}
           <div className="mt-5">
-            <label className="block text-cafe-300 text-xs font-medium mb-1.5">
+            <label htmlFor="co-obs" className="block text-cafe-300 text-xs font-medium mb-1.5">
               Observaciones adicionales (opcional)
             </label>
             <textarea
+              id="co-obs"
               value={observations}
               onChange={(e) => setObservations(e.target.value)}
               rows={2}
@@ -159,8 +184,8 @@ export function CustomOrder() {
           </div>
 
           {/* Selección de WhatsApp */}
-          <div className="mt-5">
-            <p className="text-cafe-500 font-medium text-sm mb-3">Enviar cotización a</p>
+          <fieldset className="mt-5">
+            <legend className="text-cafe-500 font-medium text-sm mb-3">Enviar cotización a</legend>
             <div className="grid sm:grid-cols-2 gap-3">
               {whatsappOptions.map((opt) => (
                 <label
@@ -180,12 +205,12 @@ export function CustomOrder() {
                   />
                   <div>
                     <p className="text-cafe-500 font-medium text-sm">{opt.label}</p>
-                    <p className="text-cafe-300/70 text-xs">{opt.display}</p>
+                    <p className="text-cafe-300/90 text-xs">{opt.display}</p>
                   </div>
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           {/* Botón */}
           <button
@@ -195,7 +220,7 @@ export function CustomOrder() {
             <MessageCircle size={20} />
             Solicitar cotización por WhatsApp
           </button>
-          <p className="text-center text-xs text-cafe-300/60 mt-3">
+          <p className="text-center text-xs text-cafe-300/90 mt-3">
             La cotización no confirma precio ni disponibilidad. El negocio confirmará los detalles por WhatsApp.
           </p>
         </div>
