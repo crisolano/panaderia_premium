@@ -47,9 +47,12 @@ Alternativas: Netlify también lee `_headers`. GitHub Pages no admite encabezado
 
 ## 5. Después de tener dominio
 
-1. En `index.html` añade `<link rel="canonical">` y `og:url` / `og:image` con la dirección definitiva.
-2. Crea `public/sitemap.xml` y apúntalo desde `public/robots.txt`.
-3. Añade el sitio a Google Search Console.
+Ya hecho en el código: la dirección oficial es `https://ricurasdelmaiz.com` (sin `www`), con `canonical`, `og:url`, imagen de vista previa (`og-image.jpg`), datos estructurados con `url`, `image` y `logo`, `sitemap.xml` y `robots.txt` apuntando a él. Cloudflare ya redirige `http` a `https`.
+
+Pendiente en el panel de Cloudflare (no se puede hacer desde el código):
+1. En Workers & Pages > panaderia-premium > Custom domains, agrega también `www.ricurasdelmaiz.com`.
+2. Para que `www` lleve al dominio oficial, en el dominio ve a Rules > Redirect Rules y crea una regla: si el host es `www.ricurasdelmaiz.com`, redirigir (301, conservando la ruta) a `https://ricurasdelmaiz.com`.
+3. Añade el sitio a Google Search Console y envía `https://ricurasdelmaiz.com/sitemap.xml`.
 4. En la ficha de Google Business Profile pon la web, el nombre "Panadería Ricuras del Maíz", el horario y la dirección correctos.
 5. Si activas la clave de API de Google Maps, crea `.env` con `VITE_GOOGLE_MAPS_EMBED_API_KEY` y restríngela por dominio en Google Cloud. Sin clave el mapa ya funciona.
 
