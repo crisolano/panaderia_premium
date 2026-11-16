@@ -26,7 +26,7 @@ No probado: el diseño en celular (el emulador dio anchos inconsistentes), la ap
 
 ## 3. Datos que debes confirmar antes de publicar
 
-- **Dirección:** el sitio dice "Calle 3 #12-07, Barrio Villanueva", pero la ficha de Google muestra "Cra. 12 #2a-69". Define cuál es la correcta y úsala igual en el sitio, la política y Google.
+- **Dirección (confirmada: "Calle 3 #12-07, Barrio Villanueva"):** el sitio, la política y los datos estructurados ya la usan. Falta cambiarla en la ficha de Google, que hoy muestra "Cra. 12 #2a-69". Al cambiarla, Google puede mover el pin del mapa: después de guardar, verifica que el pin siga sobre el local real (las coordenadas del sitio, 6.99336 / -73.04861, salen de las fotos tomadas en el local) y arrástralo si hace falta.
 - **Razón social y NIT:** no están en la política porque no los tengo. Si los tienes, agrégalos en el punto 1 de `public/privacidad.html`.
 - **Precios:** hoy el sitio dice "Precio por confirmar por WhatsApp". La Ley 1480 de 2011 pide informar precio al consumidor en ventas a distancia. Conviene publicar precios reales de los productos que muestres.
 - **Nombres de productos:** son tentativos, salen de las fotos. Corrígelos.
