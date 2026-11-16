@@ -4,6 +4,17 @@ Revisado el 16-nov-2026. Los precios cambian: confírmalos en la página del reg
 
 ## 1. Estado actual en Google Maps (lo que encontré)
 
+**Actualización:** la ficha real de tu local es otra. El negocio compartió el enlace y es **"Panaderia Barrio Villanueva"**: 4,5 ★ con 93 opiniones, dirección "Cra. 12 #2a-69", teléfono 76557241, con el botón "Reclamar este negocio" disponible. Su pin está a **~12 m** de donde se tomaron las fotos del local, así que las coordenadas de la web son correctas. La ficha "…2025" de la tabla de abajo es un lugar aparte, casi seguro un duplicado: no la reclames; cuando termines con la tuya, repórtala como duplicada.
+
+Pasos con la ficha de 93 opiniones:
+1. Reclámala y verifícala (Google ofrece los métodos que le correspondan: llamada, mensaje, correo o video).
+2. Cambia el nombre. Google revisa los cambios de nombre; si el negocio cambió de marca de verdad, ten a mano una foto de la fachada con el letrero nuevo. Las opiniones se conservan.
+3. Revisa el teléfono: figura el 76557241. Pon el que atiendan hoy y añade el otro como secundario.
+4. Dirección: confirma que diga "Calle 3 #12-07, Barrio Villanueva", como en la web. Hoy figura "Cra. 12 #2a-69". Deben coincidir en la ficha, la web y el letrero.
+5. Añade horario real, fotos (las del local) y la dirección de la web.
+
+**Sobre el nombre:** Google pide el nombre real, tal como en la fachada, sin palabras que describan productos o servicios. "Ricuras del Maíz" es lo más seguro y la categoría "Panadería" ya te hace aparecer en búsquedas de panadería. "Panadería Ricuras del Maíz" es defendible porque el letrero dice PANADERÍA sobre el logo, pero Google puede rechazar el cambio. Si lo intentas y lo rechazan, usa "Ricuras del Maíz". Lo importante es que el nombre sea idéntico en la ficha, la web y el letrero.
+
 | Hallazgo | Detalle |
 |---|---|
 | Ficha existente | Google ya tiene un lugar llamado **"panaderia las ricuras del maiz 2025"**: 3,7 ★ con 3 opiniones, sin teléfono, sin horario y sin sitio web. |
@@ -13,7 +24,7 @@ Revisado el 16-nov-2026. Los precios cambian: confírmalos en la página del reg
 
 Qué hice en la web: el mapa y "Cómo llegar" usan esas coordenadas. Confírmalo tú: abre el sitio, pulsa "Cómo llegar" y revisa que el pin quede en tu puerta.
 
-**No sé si la ficha "…2025" es tuya.** Si la creaste tú o alguien de tu equipo, reclámala (botón "Administrar este perfil") y corrige nombre y ubicación. Si no es tuya, no la edites a ciegas: reclámala o solicita que la corrijan, y evita crear una segunda ficha para el mismo local (Google permite un perfil por negocio y ubicación).
+Evita tener dos fichas para el mismo local: Google permite un perfil por negocio y ubicación.
 
 ## 2. Cómo aparecer primero para "ricuras del maíz panadería"
 
@@ -74,7 +85,7 @@ Un subdominio gratis sirve para empezar, pero se ve menos profesional, es más d
 
 ## 4. Qué decidir tú
 
-1. ¿La ficha "panaderia las ricuras del maiz 2025" es tuya?
+1. ¿Qué nombre pondrás en la ficha: "Ricuras del Maíz" o "Panadería Ricuras del Maíz"?
 2. ¿Qué dominio compras?
 3. ¿Cuál es el horario real? Es lo más urgente para la ficha y para la web.
 4. ¿Tienen Instagram o Facebook oficiales?
