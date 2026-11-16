@@ -1,24 +1,50 @@
 // ============================================================
-// CONFIGURACIÓN DEL SITIO — Editar estos valores libremente
+// CONFIGURACIÓN DEL SITIO — Ricuras del Maíz
+// Editar estos valores libremente. Todos los datos son demostrativos.
 // ============================================================
 
 export const siteConfig = {
-  name: 'Panadería Artesanal',
-  tagline: 'El sabor de lo hecho con amor',
-  // Número de WhatsApp en formato internacional, sin "+", espacios ni guiones.
-  // Ej: Colombia 57 300 123 4567 => 573001234567
-  whatsappNumber: '573001234567',
-  email: 'contacto@panaderiaartesanal.co',
-  address: 'Calle 123 #45-67, Bogotá, Colombia',
-  hours: 'Lun–Sáb: 6:00 a.m. – 8:00 p.m.',
-  phoneDisplay: '+57 300 123 4567',
+  name: 'Ricuras del Maíz',
+  tagline: 'Tradición y sabor en cada bocado',
+  city: 'Piedecuesta, Santander, Colombia',
+  address: 'Calle 3 #12-07, Barrio Villanueva',
+  // Dos números de WhatsApp independientes. Formato internacional sin "+" ni espacios.
+  whatsappPrimary: '573133447620',
+  whatsappSecondary: '573208133071',
+  whatsappDisplayPrimary: '+57 313 344 7620',
+  whatsappDisplaySecondary: '+57 320 813 3071',
+  email: 'contacto@ricurasdelmaiz.co',
+  // Horario demostrativo — editable
+  hours: 'Lun–Sáb: 7:00 a.m. – 7:00 p.m.',
   social: {
     instagram: 'https://instagram.com',
     facebook: 'https://facebook.com',
   },
 };
 
-export type Category = 'panes' | 'croissants' | 'pasteles' | 'cafe';
+export interface WhatsAppOption {
+  id: 'primary' | 'secondary';
+  label: string;
+  number: string;
+  display: string;
+}
+
+export const whatsappOptions: WhatsAppOption[] = [
+  { id: 'primary', label: 'WhatsApp principal', number: siteConfig.whatsappPrimary, display: siteConfig.whatsappDisplayPrimary },
+  { id: 'secondary', label: 'WhatsApp alternativo', number: siteConfig.whatsappSecondary, display: siteConfig.whatsappDisplaySecondary },
+];
+
+// ============================================================
+// CATEGORÍAS DE PRODUCTOS
+// ============================================================
+
+export type Category =
+  | 'tortas'
+  | 'genovesas'
+  | 'mantecadas'
+  | 'bunuelos'
+  | 'panes-especiales'
+  | 'pedidos-personalizados';
 
 export interface CategoryInfo {
   id: Category;
@@ -27,11 +53,18 @@ export interface CategoryInfo {
 }
 
 export const categories: CategoryInfo[] = [
-  { id: 'panes', label: 'Panes', description: 'Masa madre y fermentación natural' },
-  { id: 'croissants', label: 'Croissants', description: 'Hojaldre francés mantequilla' },
-  { id: 'pasteles', label: 'Pasteles', description: 'Repostería artesanal dulce' },
-  { id: 'cafe', label: 'Café', description: 'Café de origen colombiano' },
+  { id: 'tortas', label: 'Tortas', description: 'Tortas artesanales para toda ocasión' },
+  { id: 'genovesas', label: 'Genovesas', description: 'Bizcocho esponjoso con rellenos cremosos' },
+  { id: 'mantecadas', label: 'Mantecadas', description: 'Suaves, dulces y tradicionales' },
+  { id: 'bunuelos', label: 'Buñuelos', description: 'Crujientes por fuera, suaves por dentro' },
+  { id: 'panes-especiales', label: 'Panes especiales', description: 'Elaborados con masa de maíz' },
+  { id: 'pedidos-personalizados', label: 'Pedidos personalizados', description: 'Diseños únicos para tu celebración' },
 ];
+
+// ============================================================
+// PRODUCTOS — DATOS DEMOSTRATIVOS EDITABLES
+// Los precios son de ejemplo. Sustitúyelos por los reales del negocio.
+// ============================================================
 
 export interface Product {
   id: string;
@@ -43,139 +76,173 @@ export interface Product {
   featured?: boolean;
 }
 
-// ============================================================
-// DATOS DE PRODUCTOS — Editables. Imágenes reales de Pexels.
-// ============================================================
-
 export const products: Product[] = [
+  // ---- TORTAS ----
   {
-    id: 'pan-masa-madre',
-    name: 'Pan de Masa Madre',
-    description: 'Fermentación natural de 24 horas, corteza crujiente y miga húmeda con notas ligeramente ácidas.',
-    price: 18000,
-    category: 'panes',
-    image: 'https://images.pexels.com/photos/30890566/pexels-photo-30890566.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
-  },
-  {
-    id: 'pan-campestre',
-    name: 'Pan Campestre de Trigo',
-    description: 'Pan rústico con harina de trigo entero, ideal para acompañar quesos y mermeladas.',
-    price: 14500,
-    category: 'panes',
-    image: 'https://images.pexels.com/photos/28354523/pexels-photo-28354523.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pan-avena-miel',
-    name: 'Pan de Avena y Miel',
-    description: 'Pan suave con copos de avena y un toque de miel de abejas. Perfecto para el desayuno.',
-    price: 16000,
-    category: 'panes',
-    image: 'https://images.pexels.com/photos/28984953/pexels-photo-28984953.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pan-rustico-mixto',
-    name: 'Pan Rústico Mixto',
-    description: 'Selección de panes artesanales: masa madre, multicereal y de centeno. Una caja surtida.',
-    price: 32000,
-    category: 'panes',
-    image: 'https://images.pexels.com/photos/30826792/pexels-photo-30826792.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'croissant-mantequilla',
-    name: 'Croissant de Mantequilla',
-    description: 'Hojaldre francés con 81 capas de mantequilla europea. Crujiente por fuera, aireado por dentro.',
-    price: 6500,
-    category: 'croissants',
-    image: 'https://images.pexels.com/photos/20002837/pexels-photo-20002837.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
-  },
-  {
-    id: 'croissant-chocolate',
-    name: 'Croissant de Chocolate',
-    description: 'Croissant relleno de chocolate belga 70%. La combinación perfecta de mantequilla y cacao.',
-    price: 7500,
-    category: 'croissants',
-    image: 'https://images.pexels.com/photos/6202224/pexels-photo-6202224.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'croissant-almendras',
-    name: 'Croissant de Almendras',
-    description: 'Relleno de crema frangipane de almendras tostadas y espolvoreado con azúcar glas.',
-    price: 8000,
-    category: 'croissants',
-    image: 'https://images.pexels.com/photos/30853716/pexels-photo-30853716.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'croissant-canasta',
-    name: 'Canasta de Croissants (6 uds)',
-    description: 'Seis croissants mixtos: 2 de mantequilla, 2 de chocolate y 2 de almendra. Ideal para compartir.',
-    price: 36000,
-    category: 'croissants',
-    image: 'https://images.pexels.com/photos/16192282/pexels-photo-16192282.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pastel-chocolate',
-    name: 'Pastel de Chocolate',
-    description: 'Bizcocho de chocolate con ganache cremoso y frutos rojos. Una porción de indulgencia pura.',
-    price: 12000,
-    category: 'pasteles',
+    id: 'torta-chocolate',
+    name: 'Torta de Chocolate',
+    description: 'Bizcocho de chocolate con relleno cremoso y cobertura ganache. Ideal para celebraciones.',
+    price: 45000,
+    category: 'tortas',
     image: 'https://images.pexels.com/photos/10249461/pexels-photo-10249461.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     featured: true,
   },
   {
-    id: 'pastel-mousse',
-    name: 'Mousse de Chocolate',
-    description: 'Mouse de chocolate con crema batida y nueces caramelizadas. Suave como seda.',
-    price: 11000,
-    category: 'pasteles',
-    image: 'https://images.pexels.com/photos/8601851/pexels-photo-8601851.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pastel-berry',
-    name: 'Pastel de Frutos Rojos',
-    description: 'Capas de bizcocho vanilla, crema de queso y frutos rojos frescos. Refrescante y elegante.',
-    price: 13500,
-    category: 'pasteles',
-    image: 'https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pastel-naranja-choco',
-    name: 'Pastel de Naranja y Chocolate',
-    description: 'Bizcocho aromatizado con naranja y cobertura de chocolate amargo. Cítrico y profundo.',
-    price: 12500,
-    category: 'pasteles',
-    image: 'https://images.pexels.com/photos/30427454/pexels-photo-30427454.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'cafe-latte',
-    name: 'Café Latte',
-    description: 'Espresso de café colombiano con leche vaporizada y arte latte. Una obra en cada taza.',
-    price: 9000,
-    category: 'cafe',
-    image: 'https://images.pexels.com/photos/2226091/pexels-photo-2226091.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    id: 'torta-fresas',
+    name: 'Torta de Fresas y Crema',
+    description: 'Bizcocho esponjoso con capas de crema y fresas frescas. Fresca y elegante.',
+    price: 48000,
+    category: 'tortas',
+    image: 'https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     featured: true,
   },
   {
-    id: 'cafe-cappuccino',
-    name: 'Cappuccino Clásico',
-    description: 'Espresso, leche vaporizada y espuma sedosa. La proporción italiana tradicional.',
-    price: 8500,
-    category: 'cafe',
-    image: 'https://images.pexels.com/photos/19252265/pexels-photo-19252265.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    id: 'torta-cumpleanos',
+    name: 'Torta de Cumpleaños',
+    description: 'Torta decorada con temática personalizable. Incluye mensaje y velas.',
+    price: 55000,
+    category: 'tortas',
+    image: 'https://images.pexels.com/photos/27176374/pexels-photo-27176374.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   },
   {
-    id: 'cafe-arte-latte',
-    name: 'Latte Art Especial',
-    description: 'Café preparado por nuestro barista con diseño personalizado en la espuma. Un detalle único.',
+    id: 'torta-frutos-rojos',
+    name: 'Torta de Frutos Rojos',
+    description: 'Bizcocho vanilla con crema de queso y frutos rojos frescos. Refrescante y sofisticada.',
+    price: 52000,
+    category: 'tortas',
+    image: 'https://images.pexels.com/photos/28042335/pexels-photo-28042335.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+
+  // ---- GENOVESAS ----
+  {
+    id: 'genovesa-clasica',
+    name: 'Genovesa Clásica',
+    description: 'Bizcocho esponjoso relleno de crema de vainilla. Suave como seda, un clásico de la casa.',
+    price: 15000,
+    category: 'genovesas',
+    image: 'https://images.pexels.com/photos/1359322/pexels-photo-1359322.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    featured: true,
+  },
+  {
+    id: 'genovesa-chocolate',
+    name: 'Genovesa de Chocolate',
+    description: 'Bizcocho de chocolate relleno con crema de cacao. Para los amantes del chocolate intenso.',
+    price: 16000,
+    category: 'genovesas',
+    image: 'https://images.pexels.com/photos/12035746/pexels-photo-12035746.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+  {
+    id: 'genovesa-fresa',
+    name: 'Genovesa de Fresa',
+    description: 'Bizcocho suave con crema de fresa y trozos de fruta. Una delicia frutal.',
+    price: 16000,
+    category: 'genovesas',
+    image: 'https://images.pexels.com/photos/39646568/pexels-photo-39646568.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+
+  // ---- MANTECADAS ----
+  {
+    id: 'mantecada-clasica',
+    name: 'Mantecada Clásica',
+    description: 'Mantecada tradicional colombiana, suave y dulce. Perfecta para acompañar el café.',
+    price: 2000,
+    category: 'mantecadas',
+    image: 'https://images.pexels.com/photos/5847185/pexels-photo-5847185.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    featured: true,
+  },
+  {
+    id: 'mantecada-chocolate',
+    name: 'Mantecada de Chocolate',
+    description: 'Mantecada con chispas de chocolate. El toque dulce para tu merienda.',
+    price: 2500,
+    category: 'mantecadas',
+    image: 'https://images.pexels.com/photos/20768168/pexels-photo-20768168.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+  {
+    id: 'mantecada-pack-12',
+    name: 'Pack Mantecadas (12 unidades)',
+    description: 'Doce mantecadas mixtas: clásicas y de chocolate. Ideal para compartir.',
+    price: 24000,
+    category: 'mantecadas',
+    image: 'https://images.pexels.com/photos/37049121/pexels-photo-37049121.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+
+  // ---- BUÑUELOS ----
+  {
+    id: 'bunuelos-docena',
+    name: 'Buñuelos (docena)',
+    description: 'Doce buñuelos crujientes por fuera y suaves por dentro. Tradición santandereana.',
+    price: 18000,
+    category: 'bunuelos',
+    image: 'https://images.pexels.com/photos/37178844/pexels-photo-37178844.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    featured: true,
+  },
+  {
+    id: 'bunuelos-media',
+    name: 'Buñuelos (media docena)',
+    description: 'Seis buñuelos recién fritos. El antojito perfecto para la tarde.',
     price: 10000,
-    category: 'cafe',
-    image: 'https://images.pexels.com/photos/765162/pexels-photo-765162.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'bunuelos',
+    image: 'https://images.pexels.com/photos/36038590/pexels-photo-36038590.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+
+  // ---- PANES ESPECIALES ----
+  {
+    id: 'pan-maiz',
+    name: 'Pan de Maíz',
+    description: 'Pan elaborado con masa de maíz fresco. Corteza dorada y miga suave con sabor a maíz.',
+    price: 12000,
+    category: 'panes-especiales',
+    image: 'https://images.pexels.com/photos/30890566/pexels-photo-30890566.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    featured: true,
+  },
+  {
+    id: 'pan-rustico',
+    name: 'Pan Rústico Especial',
+    description: 'Pan artesanal con mezcla de harinas y fermentación lenta. Intenso y aromático.',
+    price: 14000,
+    category: 'panes-especiales',
+    image: 'https://images.pexels.com/photos/35815220/pexels-photo-35815220.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+  {
+    id: 'pan-canasta',
+    name: 'Canasta de Panes Especiales',
+    description: 'Selección de panes de maíz y rústicos. Cuatro piezas variadas en canasta de regalo.',
+    price: 32000,
+    category: 'panes-especiales',
+    image: 'https://images.pexels.com/photos/10202985/pexels-photo-10202985.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+
+  // ---- PEDIDOS PERSONALIZADOS ----
+  {
+    id: 'pedido-torta-evento',
+    name: 'Torta Personalizada para Evento',
+    description: 'Torta con diseño temático para tu celebración. Tamaño, sabor y decoración a tu elección. Consulta disponibilidad.',
+    price: 80000,
+    category: 'pedidos-personalizados',
+    image: 'https://images.pexels.com/photos/10455239/pexels-photo-10455239.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    featured: true,
+  },
+  {
+    id: 'pedido-mesa-dulce',
+    name: 'Mesa Dulce Personalizada',
+    description: 'Selección de tortas, genovesas y mantecadas para tu evento. Cantidad y variedad según tu necesidad.',
+    price: 150000,
+    category: 'pedidos-personalizados',
+    image: 'https://images.pexels.com/photos/40499996/pexels-photo-40499996.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  },
+  {
+    id: 'pedido-torta-boda',
+    name: 'Torta para Boda',
+    description: 'Torta multinivel con decoración floral y elegante. Diseño exclusivo para tu día especial.',
+    price: 250000,
+    category: 'pedidos-personalizados',
+    image: 'https://images.pexels.com/photos/30233153/pexels-photo-30233153.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
   },
 ];
 
 // ============================================================
-// TESTIMONIOS — Editables
+// TESTIMONIOS — DATOS DEMOSTRATIVOS EDITABLES
 // ============================================================
 
 export interface Testimonial {
@@ -189,30 +256,52 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     id: 't1',
-    name: 'María Camila Restrepo',
-    location: 'Bogotá',
-    text: 'El pan de masa madre es el mejor que he probado en la ciudad. Se nota el amor y la paciencia en cada mordida. Ya es parte de nuestro desayuno de los domingos.',
+    name: 'Laura Gómez',
+    location: 'Piedecuesta',
+    text: 'La torta de fresas y crema que pedí para el cumpleaños de mi hija fue espectacular. Súper fresca y el pedido por WhatsApp fue rapidísimo. ¡Las volveré a pedir!',
     rating: 5,
   },
   {
     id: 't2',
-    name: 'Juan Sebastián López',
-    location: 'Medellín',
-    text: 'Pedí los croissants de chocolate para una reunión y desaparecieron en minutos. La textura hojaldrada es perfecta, como en París. Súper recomendados.',
+    name: 'Carlos Mendoza',
+    location: 'Floridablanca',
+    text: 'Los buñuelos son los mejores de la zona. Crispantes por fuera y suaves por dentro. El domicilio llegó a tiempo y bien caliente. Excelente servicio.',
     rating: 5,
   },
   {
     id: 't3',
-    name: 'Daniela Ortega',
-    location: 'Cali',
-    text: 'El pastel de frutos rojos fue el centro de atención en el cumpleaños de mi mamá. Fresco, elegante y delicioso. Pedir por WhatsApp fue rapidísimo.',
+    name: 'Andrea Rueda',
+    location: 'Bucaramanga',
+    text: 'Pedí una torta personalizada para mi boda y superó mis expectativas. El diseño era hermoso y el sabor delicioso. Muchísimas gracias por hacer nuestro día especial.',
     rating: 5,
   },
 ];
 
-// Imágenes del sitio
+// ============================================================
+// IMÁGENES DEL SITIO — Editables
+// ============================================================
+
 export const images = {
-  hero: 'https://images.pexels.com/photos/30890566/pexels-photo-30890566.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  about: 'https://images.pexels.com/photos/2253636/pexels-photo-2253636.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  breadOven: 'https://images.pexels.com/photos/36891446/pexels-photo-36891446.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  hero: 'https://images.pexels.com/photos/7877994/pexels-photo-7877994.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  about: 'https://images.pexels.com/photos/30005123/pexels-photo-30005123.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  breadOven: 'https://images.pexels.com/photos/35993723/pexels-photo-35993723.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
 };
+
+// ============================================================
+// HORARIOS DE RECOGIDA — Demostrativos, editables
+// ============================================================
+
+export const pickupTimeSlots: string[] = [
+  '7:00 a.m.',
+  '8:00 a.m.',
+  '9:00 a.m.',
+  '10:00 a.m.',
+  '11:00 a.m.',
+  '12:00 p.m.',
+  '1:00 p.m.',
+  '2:00 p.m.',
+  '3:00 p.m.',
+  '4:00 p.m.',
+  '5:00 p.m.',
+  '6:00 p.m.',
+];

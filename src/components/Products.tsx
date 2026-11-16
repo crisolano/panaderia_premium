@@ -20,16 +20,16 @@ export function Products({ onAdd }: ProductsProps) {
   ];
 
   return (
-    <section id="productos" className="py-24 sm:py-32 bg-cream-50">
+    <section id="productos" className="py-24 sm:py-32 bg-crema-50">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-terracota-400 font-semibold tracking-wider text-sm uppercase">
             Nuestro catálogo
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-serif text-brown-500 leading-tight text-balance">
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-serif text-cafe-500 leading-tight text-balance">
             Productos horneados cada mañana
           </h2>
-          <p className="mt-5 text-brown-300/80 text-lg">
+          <p className="mt-5 text-cafe-300/80 text-lg">
             Selecciona tu favorito y agrégalo al carrito. Al finalizar, tu pedido se envía directamente por WhatsApp.
           </p>
         </div>
@@ -42,8 +42,8 @@ export function Products({ onAdd }: ProductsProps) {
               onClick={() => setActive(f.id)}
               className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all ${
                 active === f.id
-                  ? 'bg-terracota-400 text-cream-100 shadow-md'
-                  : 'bg-cream-200 text-brown-300 hover:bg-beige-200'
+                  ? 'bg-maiz-300 text-cafe-900 shadow-md'
+                  : 'bg-crema-200 text-cafe-300 hover:bg-maiz-100'
               }`}
             >
               {f.label}

@@ -34,8 +34,8 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-cream-100/95 backdrop-blur-md shadow-[0_2px_20px_rgba(59,41,33,0.08)]'
-          : 'bg-cream-100/80 backdrop-blur-sm'
+          ? 'bg-crema-100/95 backdrop-blur-md shadow-[0_2px_20px_rgba(73,51,38,0.08)]'
+          : 'bg-crema-100/80 backdrop-blur-sm'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-20">
@@ -45,10 +45,10 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
           className="flex items-center gap-2.5 group"
           aria-label="Ir al inicio"
         >
-          <span className="w-10 h-10 rounded-full bg-terracota-400 flex items-center justify-center text-cream-100 group-hover:scale-105 transition-transform">
+          <span className="w-10 h-10 rounded-full bg-maiz-300 flex items-center justify-center text-cafe-500 group-hover:scale-105 transition-transform">
             <Wheat size={22} />
           </span>
-          <span className="font-serif text-xl text-brown-500 leading-none">
+          <span className="font-serif text-xl text-cafe-500 leading-none">
             {siteConfig.name}
           </span>
         </button>
@@ -59,7 +59,7 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
             <li key={link.id}>
               <button
                 onClick={() => handleNav(link.id)}
-                className="text-brown-300 hover:text-terracota-400 font-medium text-[0.95rem] transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-0.5 after:bg-terracota-400 hover:after:w-full after:transition-all"
+                className="text-cafe-300 hover:text-terracota-400 font-medium text-[0.95rem] transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-0.5 after:bg-terracota-400 hover:after:w-full after:transition-all"
               >
                 {link.label}
               </button>
@@ -71,19 +71,19 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
         <div className="flex items-center gap-3">
           <button
             onClick={onCartClick}
-            className="relative w-11 h-11 rounded-full bg-brown-500 text-cream-100 flex items-center justify-center hover:bg-brown-700 transition-colors"
+            className="relative w-11 h-11 rounded-full bg-cafe-500 text-crema-100 flex items-center justify-center hover:bg-cafe-700 transition-colors"
             aria-label="Abrir carrito"
           >
             <ShoppingBag size={20} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-terracota-400 text-cream-100 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center animate-fade-in">
+              <span className="absolute -top-1 -right-1 bg-maiz-300 text-cafe-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center animate-fade-in">
                 {cartCount}
               </span>
             )}
           </button>
 
           <button
-            className="md:hidden w-11 h-11 rounded-full bg-cream-200 text-brown-500 flex items-center justify-center"
+            className="md:hidden w-11 h-11 rounded-full bg-crema-200 text-cafe-500 flex items-center justify-center"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Menú"
           >
@@ -94,13 +94,13 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-cream-100 border-t border-cream-300 animate-fade-in">
+        <div className="md:hidden bg-crema-100 border-t border-crema-300 animate-fade-in">
           <ul className="px-5 py-4 space-y-1">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <button
                   onClick={() => handleNav(link.id)}
-                  className="w-full text-left py-3 px-3 rounded-lg text-brown-500 hover:bg-cream-200 font-medium transition-colors"
+                  className="w-full text-left py-3 px-3 rounded-lg text-cafe-500 hover:bg-crema-200 font-medium transition-colors"
                 >
                   {link.label}
                 </button>
