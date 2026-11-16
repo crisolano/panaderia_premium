@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Menu, X, ShoppingBag, Wheat } from 'lucide-react';
-import { siteConfig } from '@/data/site';
+import { Menu, X, ShoppingBag } from 'lucide-react';
+import { brand, siteConfig } from '@/data/site';
 
 interface HeaderProps {
   cartCount: number;
@@ -43,15 +43,16 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
         {/* Logo */}
         <button
           onClick={() => handleNav('inicio')}
-          className="flex items-center gap-2.5 group"
-          aria-label="Ir al inicio"
+          className="flex items-center group"
+          aria-label={`${siteConfig.name}: ir al inicio`}
         >
-          <span className="w-10 h-10 rounded-full bg-maiz-300 flex items-center justify-center text-cafe-500 group-hover:scale-105 transition-transform">
-            <Wheat size={22} />
-          </span>
-          <span className="font-serif text-base sm:text-xl text-cafe-500 leading-tight text-left">
-            {siteConfig.name}
-          </span>
+          <img
+            src={brand.logo.src}
+            width={brand.logo.width}
+            height={brand.logo.height}
+            alt=""
+            className="h-14 sm:h-16 w-auto group-hover:scale-[1.03] transition-transform"
+          />
         </button>
 
         {/* Desktop nav */}

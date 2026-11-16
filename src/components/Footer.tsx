@@ -1,5 +1,5 @@
-import { Wheat, Instagram, Facebook } from 'lucide-react';
-import { siteConfig, whatsappOptions } from '@/data/site';
+import { Instagram, Facebook } from 'lucide-react';
+import { brand, siteConfig, whatsappOptions } from '@/data/site';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -15,9 +15,7 @@ export function Footer() {
           {/* Marca */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5">
-              <span className="w-10 h-10 rounded-full bg-maiz-300 flex items-center justify-center text-cafe-900">
-                <Wheat size={22} />
-              </span>
+              <img src={brand.emblem.src} width={brand.emblem.width} height={brand.emblem.height} alt="" className="w-11 h-11" />
               <span className="font-serif text-xl text-crema-100">{siteConfig.name}</span>
             </div>
             <p className="mt-4 max-w-sm leading-relaxed">

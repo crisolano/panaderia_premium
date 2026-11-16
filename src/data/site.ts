@@ -10,6 +10,8 @@ import pPastelitos from '@/img/web/p-pastelitos.webp';
 import pTorta from '@/img/web/p-torta.webp';
 import pPostre from '@/img/web/p-postre.webp';
 import pCoco from '@/img/web/p-coco.webp';
+import logoWordmark from '@/img/web/logo.webp';
+import logoEmblem from '@/img/web/emblem.webp';
 
 // ============================================================
 // CONFIGURACIÓN DEL SITIO — Ricuras del Maíz
@@ -162,6 +164,12 @@ export interface SiteImage {
   height: number;
   alt: string;
 }
+
+// Marca: el nombre (para fondos claros) y el emblema de la espiga (sirve en claros y oscuros).
+export const brand = {
+  logo: { src: logoWordmark, width: 387, height: 168 },
+  emblem: { src: logoEmblem, width: 160, height: 160 },
+};
 
 export const images: Record<'hero' | 'about' | 'local', SiteImage> = {
   hero: {
