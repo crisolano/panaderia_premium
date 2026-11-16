@@ -84,7 +84,7 @@ export function Contact() {
               <iframe
                 title="Ubicación de Ricuras del Maíz"
                 src={mapEmbedSrc}
-                className="w-full h-full border-0 grayscale-[0.15]"
+                className="absolute inset-0 w-full h-full border-0 grayscale-[0.15]"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
