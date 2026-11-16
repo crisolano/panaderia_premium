@@ -5,6 +5,11 @@ import about480 from '@/img/web/about-480.webp';
 import about800 from '@/img/web/about-800.webp';
 import local240 from '@/img/web/local-240.webp';
 import local480 from '@/img/web/local-480.webp';
+import pHojaldres from '@/img/web/p-hojaldres.webp';
+import pPastelitos from '@/img/web/p-pastelitos.webp';
+import pTorta from '@/img/web/p-torta.webp';
+import pPostre from '@/img/web/p-postre.webp';
+import pCoco from '@/img/web/p-coco.webp';
 
 // ============================================================
 // CONFIGURACIÓN DEL SITIO — Ricuras del Maíz
@@ -13,7 +18,7 @@ import local480 from '@/img/web/local-480.webp';
 // ============================================================
 
 export const siteConfig = {
-  name: 'Ricuras del Maíz',
+  name: 'Panadería Ricuras del Maíz',
   tagline: 'Naturalmente delicioso',
   founded: 2002, // confirmado por el negocio (también está en el letrero del local)
   city: 'Piedecuesta, Santander, Colombia',
@@ -25,12 +30,17 @@ export const siteConfig = {
   whatsappDisplaySecondary: '+57 320 813 3071',
   // Pendientes de confirmar con el negocio. Mientras estén vacíos no se muestran.
   email: '',
-  hours: '',
+  // Días de atención por confirmar: solo se muestra el rango de horas.
+  hours: '6:00 a.m. – 9:00 p.m.',
   social: {
     instagram: '',
     facebook: '',
   },
 };
+
+// Enlace de WhatsApp con un mensaje inicial opcional. Sin número usa el principal.
+export const waLink = (text?: string, number = siteConfig.whatsappPrimary): string =>
+  `https://wa.me/${number}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 
 export interface WhatsAppOption {
   id: 'primary' | 'secondary';
@@ -49,12 +59,10 @@ export const whatsappOptions: WhatsAppOption[] = [
 // ============================================================
 
 export type Category =
-  | 'tortas'
-  | 'genovesas'
-  | 'mantecadas'
-  | 'bunuelos'
-  | 'panes-especiales'
-  | 'pedidos-personalizados';
+  | 'panaderia'
+  | 'pasteleria'
+  | 'postres'
+  | 'pedidos-personalizados'; // se cotiza por WhatsApp; no tiene tarjetas de producto por ahora
 
 export interface CategoryInfo {
   id: Category;
@@ -62,13 +70,11 @@ export interface CategoryInfo {
   description: string;
 }
 
+// Las categorías que se muestran como filtro. Se irán ampliando con más productos.
 export const categories: CategoryInfo[] = [
-  { id: 'tortas', label: 'Tortas', description: 'Tortas artesanales para toda ocasión' },
-  { id: 'genovesas', label: 'Genovesas', description: 'Bizcocho esponjoso con rellenos cremosos' },
-  { id: 'mantecadas', label: 'Mantecadas', description: 'Suaves, dulces y tradicionales' },
-  { id: 'bunuelos', label: 'Buñuelos', description: 'Crujientes por fuera, suaves por dentro' },
-  { id: 'panes-especiales', label: 'Panes especiales', description: 'Elaborados con masa de maíz' },
-  { id: 'pedidos-personalizados', label: 'Pedidos personalizados', description: 'Diseños únicos para tu celebración' },
+  { id: 'panaderia', label: 'Panadería', description: 'Hojaldres y más' },
+  { id: 'pasteleria', label: 'Pastelería', description: 'Pastelitos, tortas y dulces' },
+  { id: 'postres', label: 'Postres', description: 'Postres individuales' },
 ];
 
 // ============================================================
@@ -87,150 +93,44 @@ export interface Product {
   featured?: boolean;
 }
 
+// MUESTRA DE DEMOSTRACIÓN: fotos reales del local. Los nombres y descripciones son
+// tentativos (salen de las fotos) y el negocio debe corregirlos o completarlos.
 export const products: Product[] = [
-  // ---- TORTAS ----
   {
-    id: 'torta-chocolate',
-    name: 'Torta de Chocolate',
-    description: 'Torta de chocolate.',
-    category: 'tortas',
-    image: 'https://images.pexels.com/photos/10249461/pexels-photo-10249461.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    id: 'hojaldres',
+    name: 'Hojaldres rellenos',
+    description: 'Hojaldre relleno. Pregunta por los sabores disponibles.',
+    category: 'panaderia',
+    image: pHojaldres,
     featured: true,
   },
   {
-    id: 'torta-fresas',
-    name: 'Torta de Fresas y Crema',
-    description: 'Torta de fresas y crema.',
-    category: 'tortas',
-    image: 'https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
+    id: 'pastelitos',
+    name: 'Pastelitos',
+    description: 'Pastelitos con y sin chocolate.',
+    category: 'pasteleria',
+    image: pPastelitos,
   },
   {
-    id: 'torta-cumpleanos',
-    name: 'Torta de Cumpleaños',
-    description: 'Torta de cumpleaños. Pregunta por temas y decoración.',
-    category: 'tortas',
-    image: 'https://images.pexels.com/photos/27176374/pexels-photo-27176374.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    id: 'torta-porciones',
+    name: 'Torta en porciones',
+    description: 'Porciones de torta. Pregunta por tamaños y sabores.',
+    category: 'pasteleria',
+    image: pTorta,
   },
   {
-    id: 'torta-frutos-rojos',
-    name: 'Torta de Frutos Rojos',
-    description: 'Torta de frutos rojos.',
-    category: 'tortas',
-    image: 'https://images.pexels.com/photos/28042335/pexels-photo-28042335.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-
-  // ---- GENOVESAS ----
-  {
-    id: 'genovesa-clasica',
-    name: 'Genovesa Clásica',
-    description: 'Genovesa clásica.',
-    category: 'genovesas',
-    image: 'https://images.pexels.com/photos/1359322/pexels-photo-1359322.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
+    id: 'dulces-coco',
+    name: 'Dulces de coco',
+    description: 'Dulces cubiertos de coco.',
+    category: 'pasteleria',
+    image: pCoco,
   },
   {
-    id: 'genovesa-chocolate',
-    name: 'Genovesa de Chocolate',
-    description: 'Genovesa de chocolate.',
-    category: 'genovesas',
-    image: 'https://images.pexels.com/photos/12035746/pexels-photo-12035746.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'genovesa-fresa',
-    name: 'Genovesa de Fresa',
-    description: 'Genovesa de fresa.',
-    category: 'genovesas',
-    image: 'https://images.pexels.com/photos/39646568/pexels-photo-39646568.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-
-  // ---- MANTECADAS ----
-  {
-    id: 'mantecada-clasica',
-    name: 'Mantecada Clásica',
-    description: 'Mantecada clásica.',
-    category: 'mantecadas',
-    image: 'https://images.pexels.com/photos/5847185/pexels-photo-5847185.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
-  },
-  {
-    id: 'mantecada-chocolate',
-    name: 'Mantecada de Chocolate',
-    description: 'Mantecada de chocolate.',
-    category: 'mantecadas',
-    image: 'https://images.pexels.com/photos/20768168/pexels-photo-20768168.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'mantecada-pack-12',
-    name: 'Pack Mantecadas (12 unidades)',
-    description: 'Paquete de doce mantecadas.',
-    category: 'mantecadas',
-    image: 'https://images.pexels.com/photos/37049121/pexels-photo-37049121.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-
-  // ---- BUÑUELOS ----
-  {
-    id: 'bunuelos-docena',
-    name: 'Buñuelos (docena)',
-    description: 'Una docena de buñuelos.',
-    category: 'bunuelos',
-    image: 'https://images.pexels.com/photos/37178844/pexels-photo-37178844.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
-  },
-  {
-    id: 'bunuelos-media',
-    name: 'Buñuelos (media docena)',
-    description: 'Media docena de buñuelos.',
-    category: 'bunuelos',
-    image: 'https://images.pexels.com/photos/36038590/pexels-photo-36038590.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-
-  // ---- PANES ESPECIALES ----
-  {
-    id: 'pan-maiz',
-    name: 'Pan de Maíz',
-    description: 'Pan de maíz.',
-    category: 'panes-especiales',
-    image: 'https://images.pexels.com/photos/30890566/pexels-photo-30890566.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
-  },
-  {
-    id: 'pan-rustico',
-    name: 'Pan Rústico Especial',
-    description: 'Pan rústico especial.',
-    category: 'panes-especiales',
-    image: 'https://images.pexels.com/photos/35815220/pexels-photo-35815220.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pan-canasta',
-    name: 'Canasta de Panes Especiales',
-    description: 'Canasta de panes especiales.',
-    category: 'panes-especiales',
-    image: 'https://images.pexels.com/photos/10202985/pexels-photo-10202985.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-
-  // ---- PEDIDOS PERSONALIZADOS ----
-  {
-    id: 'pedido-torta-evento',
-    name: 'Torta Personalizada para Evento',
-    description: 'Torta con diseño a tu medida. Cuéntanos tamaño, sabor y decoración y te cotizamos.',
-    category: 'pedidos-personalizados',
-    image: 'https://images.pexels.com/photos/10455239/pexels-photo-10455239.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    featured: true,
-  },
-  {
-    id: 'pedido-mesa-dulce',
-    name: 'Mesa Dulce Personalizada',
-    description: 'Mesa dulce para tu evento. Cuéntanos qué necesitas y te cotizamos.',
-    category: 'pedidos-personalizados',
-    image: 'https://images.pexels.com/photos/40499996/pexels-photo-40499996.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-  },
-  {
-    id: 'pedido-torta-boda',
-    name: 'Torta para Boda',
-    description: 'Torta para boda. Cuéntanos el diseño y te cotizamos.',
-    category: 'pedidos-personalizados',
-    image: 'https://images.pexels.com/photos/30233153/pexels-photo-30233153.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    id: 'postre-fresa',
+    name: 'Postre de fresa con crema',
+    description: 'Postre individual con fresa y crema.',
+    category: 'postres',
+    image: pPostre,
   },
 ];
 

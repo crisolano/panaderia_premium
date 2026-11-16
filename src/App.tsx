@@ -10,6 +10,7 @@ import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { CartDrawer } from '@/components/CartDrawer';
 import { CustomOrder } from '@/components/CustomOrder';
+import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 
 export default function App() {
   const cart = useCart();
@@ -43,6 +44,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <WhatsAppFloat />
 
       <CartDrawer
         isOpen={cart.isOpen}

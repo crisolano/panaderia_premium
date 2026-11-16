@@ -3,6 +3,7 @@ import { X, Plus, Minus, Trash2, ShoppingBag, MessageCircle, ArrowLeft, Truck, S
 import type { CartItem } from '@/hooks/useCart';
 import { formatCOP, MAX_QTY } from '@/hooks/useCart';
 import { siteConfig, whatsappOptions } from '@/data/site';
+import { openLink } from '@/lib/openLink';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -97,7 +98,7 @@ export function CartDrawer({
       `\n\n¡Gracias!`;
 
     const url = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openLink(url);
   };
 
   const goCheckout = () => {

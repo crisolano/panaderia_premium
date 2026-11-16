@@ -21,7 +21,7 @@ export function Footer() {
               <span className="font-serif text-xl text-crema-100">{siteConfig.name}</span>
             </div>
             <p className="mt-4 max-w-sm leading-relaxed">
-              {siteConfig.tagline}. Panadería en {siteConfig.city}. Pedidos por WhatsApp con domicilio o recogida en tienda.
+              {siteConfig.tagline}. {siteConfig.city}. Pedidos por WhatsApp con domicilio o recogida en tienda.
             </p>
             {(siteConfig.social.instagram || siteConfig.social.facebook) && (
               <div className="mt-5 flex gap-3">

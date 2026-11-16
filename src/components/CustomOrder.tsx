@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MessageCircle, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { siteConfig, customOrderTypes, whatsappOptions } from '@/data/site';
+import { openLink } from '@/lib/openLink';
 
 // Fecha local de hoy (YYYY-MM-DD), para no aceptar fechas pasadas.
 const todayISO = () => new Date().toLocaleDateString('sv-SE');
@@ -42,7 +43,7 @@ export function CustomOrder() {
       `\n_Nota:_ Puedo enviar imágenes de referencia por este chat.`;
 
     const url = `https://wa.me/${wa.number}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openLink(url);
   };
 
   return (

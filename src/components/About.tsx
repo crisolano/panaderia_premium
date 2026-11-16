@@ -65,7 +65,7 @@ export function About() {
               Nuestra panadería en Piedecuesta
             </h2>
             <p className="mt-6 text-cafe-300 text-lg leading-relaxed">
-              Ricuras del Maíz es una panadería de Piedecuesta, Santander, desde {siteConfig.founded}. Atendemos pedidos con domicilio y recogida en tienda, y hacemos pedidos personalizados para tus celebraciones.
+              Somos {siteConfig.name}, en Piedecuesta, Santander, desde {siteConfig.founded}. Atendemos pedidos con domicilio y recogida en tienda, y hacemos pedidos personalizados para tus celebraciones.
             </p>
 
             <div className="mt-10 space-y-5">

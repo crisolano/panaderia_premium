@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { products, categories, type Category, type Product } from '@/data/site';
+import { MessageCircle } from 'lucide-react';
+import { products, categories, siteConfig, waLink, type Category, type Product } from '@/data/site';
 import { ProductCard } from './ProductCard';
 
 interface ProductsProps {
@@ -28,10 +29,10 @@ export function Products({ onAdd, onQuote }: ProductsProps) {
             Nuestro catálogo
           </span>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-serif text-cafe-500 leading-tight text-balance">
-            Nuestros productos
+            Algunos de nuestros productos
           </h2>
           <p className="mt-5 text-cafe-300/80 text-lg">
-            Agrega tus favoritos al carrito. Al finalizar, tu pedido se envía por WhatsApp y allí confirmamos precio y disponibilidad.
+            Esta es una muestra. Agrega lo que quieras al carrito o escríbenos por WhatsApp y pide lo que necesites, aunque no esté aquí. Allí confirmamos precio y disponibilidad.
           </p>
         </div>
 
@@ -58,6 +59,22 @@ export function Products({ onAdd, onQuote }: ProductsProps) {
           {filtered.map((p) => (
             <ProductCard key={p.id} product={p} onAdd={onAdd} onQuote={onQuote} />
           ))}
+        </div>
+
+        <div className="mt-12 rounded-3xl bg-verde-50 border border-verde-100 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+          <div>
+            <h3 className="font-serif text-2xl text-cafe-500">¿Quieres algo que no ves aquí?</h3>
+            <p className="mt-1.5 text-cafe-300">Escríbenos por WhatsApp y cuéntanos qué necesitas.</p>
+          </div>
+          <a
+            href={waLink(`¡Hola ${siteConfig.name}! Quiero hacer un pedido.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-shrink-0 items-center gap-2.5 bg-[#25D366] hover:bg-[#1FB855] text-white font-semibold px-7 py-3.5 rounded-full transition-colors shadow-md"
+          >
+            <MessageCircle size={20} />
+            Pedir por WhatsApp
+          </a>
         </div>
       </div>
     </section>
