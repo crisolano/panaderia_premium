@@ -224,6 +224,12 @@ export function CustomOrder() {
           <p className="text-center text-xs text-cafe-300/90 mt-3">
             La cotización no confirma precio ni disponibilidad. El negocio confirmará los detalles por WhatsApp.
           </p>
+          <p className="text-center text-xs text-cafe-300/90 mt-2">
+            Lo que escribas se enviará por WhatsApp solo para atender tu solicitud.{' '}
+            <a href="/privacidad.html" target="_blank" rel="noopener noreferrer" className="underline text-terracota-500">
+              Política de privacidad
+            </a>
+          </p>
         </div>
       </div>
     </section>

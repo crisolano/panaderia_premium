@@ -39,6 +39,7 @@ export function CartDrawer({
   const [pickupTime, setPickupTime] = useState('');
   const [observations, setObservations] = useState('');
   const [waChoice, setWaChoice] = useState<'primary' | 'secondary'>('primary');
+  const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export function CartDrawer({
       if (!address.trim()) e.address = 'Ingresa la dirección';
       if (!neighborhood.trim()) e.neighborhood = 'Ingresa el barrio';
     }
+    if (!consent) e.consent = 'Acepta el tratamiento de datos para enviar el pedido';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -411,6 +413,38 @@ export function CartDrawer({
                   placeholder="Ej. Sin azúcar, para 15 personas, mensaje en la torta..."
                   className="w-full rounded-lg border-2 border-crema-200 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm placeholder:text-cafe-300/40 focus:outline-none focus:border-terracota-400 transition-colors"
                 />
+              </div>
+
+              {/* Autorización de datos personales (Ley 1581 de 2012) */}
+              <div>
+                <label className="flex items-start gap-2.5 text-xs text-cafe-300 leading-relaxed cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => {
+                      setConsent(e.target.checked);
+                      if (e.target.checked) {
+                        setErrors((prev) => {
+                          const next = { ...prev };
+                          delete next.consent;
+                          return next;
+                        });
+                      }
+                    }}
+                    aria-invalid={Boolean(errors.consent)}
+                    aria-describedby={errors.consent ? 'consent-error' : undefined}
+                    className="mt-0.5 accent-terracota-400"
+                  />
+                  <span>
+                    Autorizo el tratamiento de mis datos para atender este pedido. Se enviarán por WhatsApp.{' '}
+                    <a href="/privacidad.html" target="_blank" rel="noopener noreferrer" className="underline text-terracota-500">
+                      Política de privacidad
+                    </a>
+                  </span>
+                </label>
+                {errors.consent && (
+                  <p id="consent-error" role="alert" className="text-red-600 text-xs mt-1">{errors.consent}</p>
+                )}
               </div>
 
               {/* Resumen del pedido */}

@@ -76,7 +76,11 @@ export function Footer() {
 
         <div className="mt-12 pt-6 border-t border-crema-100/10 text-sm flex flex-col sm:flex-row justify-between items-center gap-3">
           <p>© {year} {siteConfig.name}. Todos los derechos reservados.</p>
-          <p>Piedecuesta, Santander</p>
+          <p>
+            <a href="/privacidad.html" className="hover:text-maiz-200 transition-colors underline underline-offset-4">
+              Política de privacidad
+            </a>
+          </p>
         </div>
       </div>
     </footer>

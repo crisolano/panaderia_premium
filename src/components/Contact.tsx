@@ -9,8 +9,9 @@ export function Contact() {
       return `https://www.google.com/maps/embed/v1/place?key=${googleMaps.apiKey}&q=place_id:${googleMaps.placeId}`;
     }
     if (googleMaps.apiKey) {
-      // Sin Place ID, usar búsqueda por nombre + dirección
-      return `https://www.google.com/maps/embed/v1/search?key=${googleMaps.apiKey}&q=${encodeURIComponent(googleMaps.query)}`;
+      // Sin Place ID: marcar las coordenadas exactas (la dirección escrita cae ~200 m más allá).
+      const { lat, lng } = googleMaps.coordinates;
+      return `https://www.google.com/maps/embed/v1/place?key=${googleMaps.apiKey}&q=${lat},${lng}`;
     }
     // Sin API key: embed público por coordenadas del local (no requiere clave).
     const { lat, lng } = googleMaps.coordinates;
