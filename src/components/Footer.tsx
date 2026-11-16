@@ -9,7 +9,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-cafe-900 text-crema-200/70 py-14">
+    <footer className="bg-cafe-900 text-crema-200/70 pt-14 pb-24 sm:pb-14">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* Marca */}

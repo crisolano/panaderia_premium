@@ -80,7 +80,7 @@ export function Contact() {
 
           {/* Mapa */}
           <div className="flex flex-col gap-4">
-            <div className="rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-auto min-h-[380px] bg-crema-200 relative">
+            <div className="rounded-[2rem] overflow-hidden shadow-2xl h-[320px] sm:h-[380px] lg:h-auto lg:min-h-[380px] bg-crema-200 relative">
               <iframe
                 title="Ubicación de Ricuras del Maíz"
                 src={mapEmbedSrc}

@@ -28,6 +28,7 @@
 
 @layer base {
   html {
+    -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
     /* El header fijo mide 5rem: evita que tape el título de la sección al saltar. */
     scroll-padding-top: 5rem;
@@ -43,6 +44,17 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* iPhone/Safari acerca la página al tocar un campo con letra menor de 16 px y no
+   vuelve solo. En celular los campos usan 16 px; el prefijo `html` les da prioridad
+   sobre las clases de tamaño de Tailwind. */
+@media (max-width: 639px) {
+  html input:not([type='checkbox']):not([type='radio']),
+  html select:not([hidden]),
+  html textarea:not([hidden]) {
+    font-size: 16px;
   }
 }
 
