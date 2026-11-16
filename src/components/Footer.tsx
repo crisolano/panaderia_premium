@@ -1,12 +1,11 @@
 import { Instagram, Facebook } from 'lucide-react';
 import { brand, siteConfig, whatsappOptions } from '@/data/site';
+import { scrollToSection } from '@/lib/smoothScroll';
 
 export function Footer() {
   const year = new Date().getFullYear();
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollTo = scrollToSection;
 
   return (
     <footer className="bg-cafe-900 text-crema-200/70 pt-14 pb-24 sm:pb-14">

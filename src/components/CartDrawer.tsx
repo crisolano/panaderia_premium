@@ -59,6 +59,8 @@ export function CartDrawer({
     }
     if (!consent) e.consent = 'Acepta el tratamiento de datos para enviar el pedido';
     setErrors(e);
+    // Lleva el foco al primer campo con error (tras pintar los mensajes).
+    requestAnimationFrame(() => document.querySelector<HTMLElement>('[role="dialog"] [aria-invalid="true"]')?.focus());
     return Object.keys(e).length === 0;
   };
 
@@ -131,6 +133,7 @@ export function CartDrawer({
           isOpen ? 'translate-x-0 visible' : 'translate-x-full invisible'
         }`}
         role="dialog"
+        data-lenis-prevent
         aria-modal="true"
         aria-label="Carrito de compras"
         aria-hidden={!isOpen}
@@ -184,7 +187,7 @@ export function CartDrawer({
         ) : step === 'cart' ? (
           <>
             {/* Lista de items */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-4">
               {items.map((item) => (
                 <div
                   key={item.id}
@@ -193,6 +196,8 @@ export function CartDrawer({
                   <img
                     src={item.image}
                     alt={item.name}
+                    width={80}
+                    height={80}
                     className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
                   />
                   <div className="flex-1 min-w-0">
@@ -236,7 +241,7 @@ export function CartDrawer({
               ))}
 
               <button
-                onClick={onClear}
+                onClick={() => window.confirm('¿Vaciar el carrito?') && onClear()}
                 className="text-sm text-cafe-300/90 hover:text-terracota-400 transition-colors mt-2"
               >
                 Vaciar carrito
@@ -268,11 +273,11 @@ export function CartDrawer({
         ) : (
           <>
             {/* Checkout form */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-5">
               {/* Tipo de entrega */}
               <div>
-                <label className="block text-cafe-500 font-medium text-sm mb-2.5">Tipo de entrega</label>
-                <div className="grid grid-cols-2 gap-3">
+                <p id="delivery-label" className="block text-cafe-500 font-medium text-sm mb-2.5">Tipo de entrega</p>
+                <div className="grid grid-cols-2 gap-3" role="group" aria-labelledby="delivery-label">
                   <DeliveryCard
                     active={delivery === 'domicilio'}
                     onClick={() => setDelivery('domicilio')}
@@ -372,8 +377,8 @@ export function CartDrawer({
               )}
 
               {/* Selección de WhatsApp */}
-              <div>
-                <p className="text-cafe-500 font-medium text-sm mb-3">Enviar pedido a</p>
+              <fieldset>
+                <legend className="text-cafe-500 font-medium text-sm mb-3">Enviar pedido a</legend>
                 <div className="space-y-2">
                   {whatsappOptions.map((opt) => (
                     <label
@@ -398,7 +403,7 @@ export function CartDrawer({
                     </label>
                   ))}
                 </div>
-              </div>
+              </fieldset>
 
               {/* Observaciones */}
               <div>
@@ -410,7 +415,7 @@ export function CartDrawer({
                   value={observations}
                   onChange={(e) => setObservations(e.target.value)}
                   rows={2}
-                  placeholder="Ej. Sin azúcar, para 15 personas, mensaje en la torta..."
+                  placeholder="Ej. Sin azúcar, para 15 personas, mensaje en la torta…"
                   className="w-full rounded-lg border-2 border-crema-200 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm placeholder:text-cafe-300/40 focus:outline-none focus:border-terracota-400 transition-colors"
                 />
               </div>

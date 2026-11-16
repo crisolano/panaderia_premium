@@ -1,5 +1,6 @@
 import { ArrowRight, MessageCircle } from 'lucide-react';
 import { images, siteConfig, waLink } from '@/data/site';
+import SplitText from '@/components/reactbits/SplitText';
 
 interface HeroProps {
   onExplore: () => void;
@@ -32,9 +33,15 @@ export function Hero({ onExplore }: HeroProps) {
           <span className="inline-block px-4 py-1.5 rounded-full bg-maiz-300/20 backdrop-blur-sm border border-maiz-300/30 text-maiz-100 text-sm font-medium tracking-wide mb-6 animate-slide-up">
             Desde {siteConfig.founded} · {siteConfig.city}
           </span>
-          <h1 className="text-crema-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.1] text-balance animate-slide-up">
-            {siteConfig.tagline}
-          </h1>
+          <SplitText
+            tag="h1"
+            text={siteConfig.tagline}
+            trigger="load"
+            textAlign="left"
+            delay={35}
+            duration={0.9}
+            className="text-crema-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.1]"
+          />
           <p className="mt-6 text-crema-200 text-lg sm:text-xl max-w-xl leading-relaxed animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Tortas, genovesas, mantecadas, buñuelos y panes especiales. Pide por WhatsApp, con domicilio o recogida en tienda.
           </p>

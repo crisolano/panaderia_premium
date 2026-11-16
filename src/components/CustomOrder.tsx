@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MessageCircle, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { siteConfig, customOrderTypes, whatsappOptions } from '@/data/site';
 import { openLink } from '@/lib/openLink';
+import AnimatedContent from '@/components/reactbits/AnimatedContent';
 
 // Fecha local de hoy (YYYY-MM-DD), para no aceptar fechas pasadas.
 const todayISO = () => new Date().toLocaleDateString('sv-SE');
@@ -24,6 +25,7 @@ export function CustomOrder() {
     if (!date) e.date = 'Indica la fecha en que lo necesitas';
     else if (date < todayISO()) e.date = 'La fecha no puede ser anterior a hoy';
     setErrors(e);
+    requestAnimationFrame(() => document.querySelector<HTMLElement>('#personalizar [aria-invalid="true"]')?.focus());
     return Object.keys(e).length === 0;
   };
 
@@ -49,7 +51,7 @@ export function CustomOrder() {
   return (
     <section id="personalizar" className="py-24 sm:py-32 bg-verde-50">
       <div className="max-w-4xl mx-auto px-5 sm:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <AnimatedContent className="text-center max-w-2xl mx-auto mb-12" distance={32}>
           <span className="inline-flex items-center gap-1.5 text-verde-400 font-semibold tracking-wider text-sm uppercase">
             <Sparkles size={16} /> Pedidos personalizados
           </span>
@@ -59,7 +61,7 @@ export function CustomOrder() {
           <p className="mt-5 text-cafe-300/80 text-lg">
             Cuéntanos qué tienes en mente y te enviamos una cotización por WhatsApp. Para diseños especiales, puedes enviar fotos de referencia directamente en el chat.
           </p>
-        </div>
+        </AnimatedContent>
 
         <div className="bg-crema-50 rounded-3xl shadow-xl border border-crema-200/60 p-6 sm:p-10">
           <div className="grid sm:grid-cols-2 gap-5">
@@ -171,7 +173,7 @@ export function CustomOrder() {
               value={observations}
               onChange={(e) => setObservations(e.target.value)}
               rows={2}
-              placeholder="Ej. Sin azúcar, para 15 personas, necesita refrigeración..."
+              placeholder="Ej. Sin azúcar, para 15 personas, necesita refrigeración…"
               className="w-full rounded-lg border-2 border-crema-200 bg-crema-50 px-3 py-2.5 text-cafe-500 text-sm placeholder:text-cafe-300/40 focus:outline-none focus:border-verde-300 transition-colors"
             />
           </div>

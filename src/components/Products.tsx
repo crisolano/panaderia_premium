@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { MessageCircle } from 'lucide-react';
+import AnimatedContent from '@/components/reactbits/AnimatedContent';
 import { products, categories, siteConfig, waLink, type Category, type Product } from '@/data/site';
 import { ProductCard } from './ProductCard';
 
@@ -24,7 +25,7 @@ export function Products({ onAdd, onQuote }: ProductsProps) {
   return (
     <section id="productos" className="py-24 sm:py-32 bg-crema-50">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="text-center max-w-2xl mx-auto">
+        <AnimatedContent className="text-center max-w-2xl mx-auto" distance={32}>
           <span className="text-terracota-400 font-semibold tracking-wider text-sm uppercase">
             Nuestro catálogo
           </span>
@@ -34,7 +35,7 @@ export function Products({ onAdd, onQuote }: ProductsProps) {
           <p className="mt-5 text-cafe-300/80 text-lg">
             Esta es una muestra. Agrega lo que quieras al carrito o escríbenos por WhatsApp y pide lo que necesites, aunque no esté aquí. Allí confirmamos precio y disponibilidad.
           </p>
-        </div>
+        </AnimatedContent>
 
         {/* Filtros */}
         <div className="mt-12 flex flex-wrap justify-center gap-3">
@@ -43,7 +44,7 @@ export function Products({ onAdd, onQuote }: ProductsProps) {
               key={f.id}
               onClick={() => setActive(f.id)}
               aria-pressed={active === f.id}
-              className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all ${
+              className={`px-5 py-2.5 rounded-full font-medium text-sm transition-[background-color,color,box-shadow] ${
                 active === f.id
                   ? 'bg-maiz-300 text-cafe-900 shadow-md'
                   : 'bg-crema-200 text-cafe-300 hover:bg-maiz-100'
@@ -55,11 +56,11 @@ export function Products({ onAdd, onQuote }: ProductsProps) {
         </div>
 
         {/* Grid */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <AnimatedContent className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" distance={32} stagger={0.08}>
           {filtered.map((p) => (
             <ProductCard key={p.id} product={p} onAdd={onAdd} onQuote={onQuote} />
           ))}
-        </div>
+        </AnimatedContent>
 
         <div className="mt-12 rounded-3xl bg-verde-50 border border-verde-100 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
           <div>

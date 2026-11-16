@@ -11,11 +11,13 @@ interface ProductCardProps {
 export function ProductCard({ product, onAdd, onQuote }: ProductCardProps) {
   const isCustom = product.category === 'pedidos-personalizados';
   return (
-    <article className="group bg-crema-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-crema-200/60 transition-all duration-300 flex flex-col">
+    <article className="group bg-crema-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-crema-200/60 transition-shadow duration-300 flex flex-col">
       <div className="relative aspect-[4/3] overflow-hidden bg-crema-200">
         <img
           src={product.image}
           alt={product.name}
+          width={640}
+          height={480}
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

@@ -1,5 +1,6 @@
 import { MapPin, Clock, Mail, Instagram, Facebook, MessageCircle, Navigation } from 'lucide-react';
 import { siteConfig, whatsappOptions, googleMaps } from '@/data/site';
+import AnimatedContent from '@/components/reactbits/AnimatedContent';
 
 export function Contact() {
   // Construir la URL de embed del mapa
@@ -21,7 +22,7 @@ export function Contact() {
   return (
     <section id="contacto" className="py-24 sm:py-32 bg-crema-100">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="grid lg:grid-cols-2 gap-14 items-start">
+        <AnimatedContent className="grid lg:grid-cols-2 gap-14 items-start" distance={32} stagger={0.15}>
           {/* Información */}
           <div>
             <span className="text-terracota-400 font-semibold tracking-wider text-sm uppercase">
@@ -102,7 +103,7 @@ export function Contact() {
               Cómo llegar
             </a>
           </div>
-        </div>
+        </AnimatedContent>
       </div>
     </section>
   );

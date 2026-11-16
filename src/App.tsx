@@ -1,4 +1,5 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { scrollToSection, startSmoothScroll } from '@/lib/smoothScroll';
 import { useCart } from '@/hooks/useCart';
 import type { Product } from '@/data/site';
 import { Header } from '@/components/Header';
@@ -15,6 +16,8 @@ import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 export default function App() {
   const cart = useCart();
 
+  useEffect(startSmoothScroll, []);
+
   const handleAdd = useCallback(
     (product: Product) => {
       cart.addItem(product);
@@ -23,18 +26,24 @@ export default function App() {
   );
 
   const handleExplore = useCallback(() => {
-    document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' });
+    scrollToSection('productos');
   }, []);
 
   const handleQuote = useCallback(() => {
-    document.getElementById('personalizar')?.scrollIntoView({ behavior: 'smooth' });
+    scrollToSection('personalizar');
   }, []);
 
   return (
     <div className="min-h-screen bg-cream-100">
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-crema-50 focus:px-4 focus:py-2 focus:text-cafe-500 focus:shadow-lg"
+      >
+        Saltar al contenido
+      </a>
       <Header cartCount={cart.totalItems} onCartClick={() => cart.setIsOpen(true)} />
 
-      <main>
+      <main id="contenido" tabIndex={-1} className="focus:outline-none">
         <Hero onExplore={handleExplore} />
         <About />
         <Products onAdd={handleAdd} onQuote={handleQuote} />

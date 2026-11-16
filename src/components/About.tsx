@@ -1,5 +1,6 @@
 import { MessageCircle, Truck, Sparkles } from 'lucide-react';
 import { images, siteConfig } from '@/data/site';
+import AnimatedContent from '@/components/reactbits/AnimatedContent';
 
 const values = [
   {
@@ -23,7 +24,7 @@ export function About() {
   return (
     <section id="nosotros" className="py-24 sm:py-32 bg-crema-100">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        <AnimatedContent className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center" distance={32} stagger={0.15}>
           {/* Imagen */}
           <div className="relative">
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5]">
@@ -82,7 +83,7 @@ export function About() {
               ))}
             </div>
           </div>
-        </div>
+        </AnimatedContent>
       </div>
     </section>
   );

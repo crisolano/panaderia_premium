@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X, ShoppingBag } from 'lucide-react';
 import { brand, siteConfig } from '@/data/site';
+import { scrollToSection } from '@/lib/smoothScroll';
 
 interface HeaderProps {
   cartCount: number;
@@ -28,12 +29,12 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
 
   const handleNav = (id: string) => {
     setMobileOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    scrollToSection(id);
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300 ${
         scrolled
           ? 'bg-crema-100/95 backdrop-blur-md shadow-[0_2px_20px_rgba(73,51,38,0.08)]'
           : 'bg-crema-100/80 backdrop-blur-sm'
@@ -61,7 +62,7 @@ export function Header({ cartCount, onCartClick }: HeaderProps) {
             <li key={link.id}>
               <button
                 onClick={() => handleNav(link.id)}
-                className="text-cafe-300 hover:text-terracota-400 font-medium text-[0.95rem] transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-0 after:h-0.5 after:bg-terracota-400 hover:after:w-full after:transition-all"
+                className="text-cafe-300 hover:text-terracota-400 font-medium text-[0.95rem] transition-colors relative after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-0.5 after:bg-terracota-400 after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
               >
                 {link.label}
               </button>

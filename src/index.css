@@ -39,12 +39,38 @@
   h1, h2, h3, h4 {
     @apply font-serif;
   }
+  :focus-visible {
+    outline: 2px solid theme('colors.terracota.400');
+    outline-offset: 2px;
+  }
+  a, button, input, select, textarea, label {
+    touch-action: manipulation;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Reglas de lenis/dist/lenis.css (MIT). Cambio: los iframes (el mapa) solo se bloquean
+   mientras la página se desplaza; el original los bloqueaba siempre y el mapa no se podía usar. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis {
+  scroll-behavior: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 /* iPhone/Safari acerca la página al tocar un campo con letra menor de 16 px y no
