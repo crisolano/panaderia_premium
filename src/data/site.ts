@@ -92,6 +92,8 @@ export interface Product {
   price?: number; // pesos colombianos (COP); omitir si no está confirmado
   category: Category;
   image: string;
+  /** Video corto en bucle sobre la foto (ruta dentro de public/). Opcional. */
+  video?: string;
   featured?: boolean;
 }
 
@@ -104,6 +106,7 @@ export const products: Product[] = [
     description: 'Hojaldre relleno. Pregunta por los sabores disponibles.',
     category: 'panaderia',
     image: pHojaldres,
+    video: 'video/p-hojaldres.mp4',
     featured: true,
   },
   {
@@ -112,6 +115,7 @@ export const products: Product[] = [
     description: 'Pastelitos con y sin chocolate.',
     category: 'pasteleria',
     image: pPastelitos,
+    video: 'video/p-pastelitos.mp4',
   },
   {
     id: 'torta-porciones',
@@ -119,6 +123,7 @@ export const products: Product[] = [
     description: 'Porciones de torta. Pregunta por tamaños y sabores.',
     category: 'pasteleria',
     image: pTorta,
+    video: 'video/p-torta.mp4',
   },
   {
     id: 'dulces-coco',
@@ -126,6 +131,7 @@ export const products: Product[] = [
     description: 'Dulces cubiertos de coco.',
     category: 'pasteleria',
     image: pCoco,
+    video: 'video/p-coco.mp4',
   },
   {
     id: 'postre-fresa',
@@ -133,6 +139,7 @@ export const products: Product[] = [
     description: 'Postre individual con fresa y crema.',
     category: 'postres',
     image: pPostre,
+    video: 'video/p-postre.mp4',
   },
 ];
 
@@ -163,6 +170,8 @@ export interface SiteImage {
   width: number;
   height: number;
   alt: string;
+  /** Video corto en bucle sobre la foto (ruta dentro de public/). Opcional. */
+  video?: string;
 }
 
 // Marca: el nombre (para fondos claros) y el emblema de la espiga (sirve en claros y oscuros).
@@ -185,6 +194,7 @@ export const images: Record<'hero' | 'about' | 'local', SiteImage> = {
     width: 800,
     height: 1067,
     alt: 'Letrero de la panadería Ricuras del Maíz, desde el 2002',
+    video: 'video/about.mp4',
   },
   local: {
     src: local480,
@@ -192,6 +202,7 @@ export const images: Record<'hero' | 'about' | 'local', SiteImage> = {
     width: 480,
     height: 640,
     alt: 'Letrero de neón dentro del local: dónde el café, el pan y un dulce postre alegran tu vida',
+    video: 'video/local.mp4',
   },
 };
 

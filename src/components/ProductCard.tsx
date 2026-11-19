@@ -1,6 +1,7 @@
 import { Plus, MessageCircle } from 'lucide-react';
 import type { Product } from '@/data/site';
 import { formatCOP } from '@/hooks/useCart';
+import { LoopVideo } from '@/components/LoopVideo';
 
 interface ProductCardProps {
   product: Product;
@@ -21,6 +22,13 @@ export function ProductCard({ product, onAdd, onQuote }: ProductCardProps) {
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
+        {product.video && (
+          <LoopVideo
+            src={product.video}
+            poster={product.image}
+            className="group-hover:scale-105 transition-transform duration-500"
+          />
+        )}
         {product.featured && (
           <span className="absolute top-3 left-3 bg-verde-400 text-crema-100 text-xs font-semibold px-3 py-1 rounded-full shadow">
             Destacado

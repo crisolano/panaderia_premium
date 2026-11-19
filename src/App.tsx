@@ -5,6 +5,7 @@ import type { Product } from '@/data/site';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { About } from '@/components/About';
+import { ScrollStory } from '@/components/ScrollStory';
 import { Products } from '@/components/Products';
 import { Testimonials } from '@/components/Testimonials';
 import { Contact } from '@/components/Contact';
@@ -45,6 +46,7 @@ export default function App() {
 
       <main id="contenido" tabIndex={-1} className="focus:outline-none">
         <Hero onExplore={handleExplore} />
+        <ScrollStory />
         <About />
         <Products onAdd={handleAdd} onQuote={handleQuote} />
         <CustomOrder />

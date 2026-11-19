@@ -1,6 +1,7 @@
 import { MessageCircle, Truck, Sparkles } from 'lucide-react';
 import { images, siteConfig } from '@/data/site';
 import AnimatedContent from '@/components/reactbits/AnimatedContent';
+import { LoopVideo } from '@/components/LoopVideo';
 
 const values = [
   {
@@ -38,6 +39,7 @@ export function About() {
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
+              {images.about.video && <LoopVideo src={images.about.video} poster={images.about.src} />}
             </div>
             <div className="hidden sm:block absolute -bottom-8 -right-6 w-56 h-56 rounded-[1.5rem] overflow-hidden shadow-xl border-8 border-crema-100">
               <img
@@ -50,6 +52,7 @@ export function About() {
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
+              {images.local.video && <LoopVideo src={images.local.video} poster={images.local.src} />}
             </div>
             <div className="absolute -top-5 -left-3 bg-verde-400 text-crema-100 rounded-2xl px-5 py-4 shadow-lg">
               <p className="text-xs opacity-90">Desde</p>
