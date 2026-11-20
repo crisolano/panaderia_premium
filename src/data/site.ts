@@ -12,6 +12,19 @@ import pPostre from '@/img/web/p-postre.webp';
 import pCoco from '@/img/web/p-coco.webp';
 import logoWordmark from '@/img/web/logo.webp';
 import logoEmblem from '@/img/web/emblem.webp';
+import pTortas from '@/img/web/p-tortas.webp';
+import pPan from '@/img/web/p-pan.webp';
+import gTortas480 from '@/img/web/g-tortas-480.webp';
+import gTortas800 from '@/img/web/g-tortas-800.webp';
+import gPan480 from '@/img/web/g-pan-480.webp';
+import gPan800 from '@/img/web/g-pan-800.webp';
+import gMostrador480 from '@/img/web/g-mostrador-480.webp';
+import gMostrador800 from '@/img/web/g-mostrador-800.webp';
+import gMostrador2480 from '@/img/web/g-mostrador2-480.webp';
+import gMostrador2800 from '@/img/web/g-mostrador2-800.webp';
+import gSalon480 from '@/img/web/g-salon-480.webp';
+import gSalon800 from '@/img/web/g-salon-800.webp';
+import gVideoPoster from '@/img/web/g-video-poster.webp';
 
 // ============================================================
 // CONFIGURACIÓN DEL SITIO — Ricuras del Maíz
@@ -110,6 +123,22 @@ export const products: Product[] = [
     featured: true,
   },
   {
+    id: 'pan-vitrina',
+    name: 'Pan de vitrina',
+    description: 'Panes grandes y pequeños de nuestra vitrina. Pregunta por los del día.',
+    category: 'panaderia',
+    image: pPan,
+    video: 'video/p-pan.mp4',
+  },
+  {
+    id: 'tortas-decoradas',
+    name: 'Tortas decoradas',
+    description: 'Tortas decoradas listas en vitrina. Pregunta por tamaños y sabores.',
+    category: 'pasteleria',
+    image: pTortas,
+    video: 'video/p-tortas.mp4',
+  },
+  {
     id: 'pastelitos',
     name: 'Pastelitos',
     description: 'Pastelitos con y sin chocolate.',
@@ -205,6 +234,28 @@ export const images: Record<'hero' | 'about' | 'local', SiteImage> = {
     video: 'video/local.mp4',
   },
 };
+
+// ============================================================
+// GALERÍA — fotos reales del local (src/img/web/g-*.webp)
+// ============================================================
+
+export interface GalleryItem {
+  id: string;
+  alt: string;
+  src: string;
+  srcSet?: string;
+  /** Video corto en bucle (ruta dentro de public/). Si existe, se muestra sobre la imagen. */
+  video?: string;
+}
+
+export const gallery: GalleryItem[] = [
+  { id: 'tortas', alt: 'Vitrina refrigerada con tortas decoradas', src: gTortas800, srcSet: `${gTortas480} 480w, ${gTortas800} 800w`, video: 'video/g-tortas.mp4' },
+  { id: 'pan', alt: 'Vitrina de vidrio con panes', src: gPan800, srcSet: `${gPan480} 480w, ${gPan800} 800w`, video: 'video/g-pan.mp4' },
+  { id: 'vitrina-video', alt: 'Recorrido por la vitrina de productos', src: gVideoPoster, video: 'video/vitrina-recorrido.mp4' },
+  { id: 'mostrador', alt: 'Mostrador con panes, mantecadas y productos del día', src: gMostrador800, srcSet: `${gMostrador480} 480w, ${gMostrador800} 800w`, video: 'video/g-mostrador.mp4' },
+  { id: 'mostrador-2', alt: 'Vitrina de pastelería con dulces de coco, rollos, donas y galletas', src: gMostrador2800, srcSet: `${gMostrador2480} 480w, ${gMostrador2800} 800w`, video: 'video/g-mostrador2.mp4' },
+  { id: 'salon', alt: 'Salón con mesas, letrero iluminado y letrero de neón', src: gSalon800, srcSet: `${gSalon480} 480w, ${gSalon800} 800w`, video: 'video/g-salon.mp4' },
+];
 
 // ============================================================
 // GOOGLE MAPS — Configuración centralizada

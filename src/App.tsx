@@ -1,10 +1,12 @@
 import { useCallback, useEffect } from 'react';
 import { scrollToSection, startSmoothScroll } from '@/lib/smoothScroll';
 import { useCart } from '@/hooks/useCart';
+import { siteConfig } from '@/data/site';
 import type { Product } from '@/data/site';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { About } from '@/components/About';
+import { Gallery } from '@/components/Gallery';
 import { ScrollStory } from '@/components/ScrollStory';
 import { Products } from '@/components/Products';
 import { Testimonials } from '@/components/Testimonials';
@@ -48,9 +50,20 @@ export default function App() {
         <Hero onExplore={handleExplore} />
         <ScrollStory />
         <About />
+        <Gallery />
         <Products onAdd={handleAdd} onQuote={handleQuote} />
         <CustomOrder />
         <Testimonials />
+        <ScrollStory
+          folder="scroll2"
+          label="Recorrido por el salón"
+          anchorAt={() => 0.5}
+          captions={[
+            { eyebrow: 'Nuestro salón', title: 'Un rincón para tu café' },
+            { eyebrow: 'Como dice nuestro neón', title: 'Donde el café, el pan y un dulce postre alegran tu vida' },
+            { eyebrow: siteConfig.address, title: siteConfig.hours },
+          ]}
+        />
         <Contact />
       </main>
 

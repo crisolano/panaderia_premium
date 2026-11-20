@@ -13,3 +13,6 @@
 
 /scroll/*
   Cache-Control: public, max-age=604800
+
+/scroll2/*
+  Cache-Control: public, max-age=604800

@@ -5,25 +5,52 @@ import { siteConfig } from '@/data/site';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Recorrido de cámara (generado con Higgsfield a partir de dos fotos reales del local)
-// que avanza y retrocede con el scroll. Los cuadros están en public/scroll/f-001.webp…
-const FRAME_COUNT = 96;
+// Recorrido de cámara (generado con Higgsfield a partir de fotos reales del local)
+// que avanza y retrocede con el scroll. Los cuadros están en public/<folder>/hd|sd/f-001.webp…
 // Dos juegos de cuadros: "hd" (1280 px) para pantallas grandes y "sd" (854 px) para celulares.
 type FrameSet = 'hd' | 'sd';
 const pickSet = (): FrameSet =>
   typeof window !== 'undefined' && window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) >= 1100
     ? 'hd'
     : 'sd';
-const frameSrc = (i: number, set: FrameSet = 'sd') =>
-  `${import.meta.env.BASE_URL}scroll/${set}/f-${String(i + 1).padStart(3, '0')}.webp`;
+const frameUrl = (folder: string, i: number, set: FrameSet = 'sd') =>
+  `${import.meta.env.BASE_URL}${folder}/${set}/f-${String(i + 1).padStart(3, '0')}.webp`;
 
-const captions = [
+export interface StoryCaption {
+  eyebrow: string;
+  title: string;
+}
+
+interface ScrollStoryProps {
+  /** Carpeta dentro de public/ con los cuadros (subcarpetas hd y sd). */
+  folder?: string;
+  frameCount?: number;
+  captions?: StoryCaption[];
+  label?: string;
+  /** Encuadre vertical según el avance (0 = arriba, 0.5 = centro, 1 = abajo). */
+  anchorAt?: (t: number) => number;
+  /** Cuadro que se muestra fijo con "reducir movimiento". */
+  reducedFrame?: 'first' | 'last';
+}
+
+const defaultCaptions: StoryCaption[] = [
   { eyebrow: 'Panadería de tradición', title: siteConfig.tagline },
   { eyebrow: 'En nuestra vitrina', title: 'Hojaldres, pastelitos, tortas y postres' },
   { eyebrow: siteConfig.city.replace(', Colombia', ''), title: `Desde ${siteConfig.founded}` },
 ];
 
-export function ScrollStory() {
+// Por defecto: centrado al inicio (la mesa) y arriba al final (el letrero).
+const defaultAnchor = (t: number) => 0.5 - 0.5 * t;
+
+export function ScrollStory({
+  folder = 'scroll',
+  frameCount: FRAME_COUNT = 96,
+  captions = defaultCaptions,
+  label = 'Recorrido por la panadería',
+  anchorAt = defaultAnchor,
+  reducedFrame = 'last',
+}: ScrollStoryProps = {}) {
+  const frameSrc = (i: number, set: FrameSet = 'sd') => frameUrl(folder, i, set);
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const captionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -40,13 +67,12 @@ export function ScrollStory() {
     const set = pickSet();
     let current = 0;
     let loaded = false;
-    // Encuadre vertical: centrado al inicio (la mesa) y arriba al final (el letrero).
-    const anchorFor = (index: number) => 0.5 - 0.5 * (index / (FRAME_COUNT - 1));
+    const anchorFor = (index: number) => anchorAt(index / (FRAME_COUNT - 1));
 
     const draw = (index: number) => {
-      // Usa el cuadro más cercano que ya haya cargado.
+      // Usa el cuadro cargado más cercano (hasta 10 de distancia); si no hay, queda la foto de fondo.
       let img: HTMLImageElement | undefined;
-      for (let d = 0; d < FRAME_COUNT; d++) {
+      for (let d = 0; d <= 10; d++) {
         const a = frames[index - d];
         const b = frames[index + d];
         if (a?.complete && a.naturalWidth) { img = a; break; }
@@ -102,8 +128,8 @@ export function ScrollStory() {
     resize();
 
     if (reduced) {
-      // Sin movimiento: muestra el último cuadro (el letrero) y todos los textos.
-      current = FRAME_COUNT - 1;
+      // Sin movimiento: muestra un cuadro fijo y todos los textos.
+      current = reducedFrame === 'last' ? FRAME_COUNT - 1 : 0;
       load();
       return () => {
         io.disconnect();
@@ -146,12 +172,13 @@ export function ScrollStory() {
       io.disconnect();
       window.removeEventListener('resize', resize);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [folder, FRAME_COUNT]);
 
   return (
     <section
       ref={sectionRef}
-      aria-label="Recorrido por la panadería"
+      aria-label={label}
       className="relative h-[100svh] bg-cafe-900 motion-safe:h-[320vh]"
     >
       <div
